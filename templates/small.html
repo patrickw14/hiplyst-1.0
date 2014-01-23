@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+    <title>Small Player</title>
+    <meta name="title" content="" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link rel="icon" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png" />
+
+    <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.4.custom.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/small.css?v=2" />
+    <!--[if IE]>
+        <script>
+            // Сосите мужской хуй, мудачки вендузятские. Я заставлю ваше говно любить мой HTML 5.
+            document.createElement('header');
+            document.createElement('nav');
+            document.createElement('section');
+            document.createElement('article');
+            document.createElement('aside');
+            document.createElement('footer');
+        </script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="popup_error" onclick="vkSearch.activate();">
+          To make it work, you need to log into vkontakte. Click on me.
+    </div>
+
+    <div id="wrapper">
+        <header id="header">
+            <div id="button_full"><a href="http://player.vas3k.ru" target="_blank"><img src="/images/logo_small.png" alt="" /></a></div>
+            <div id="button_play"><button></button></div>
+            <div id="progress">
+                <div id="progressbar"></div>
+                <div id="tracktitle"></div>
+                <div id="trackartist"></div>
+
+                <div id="trackprogress">
+                    <div id="trackposition"></div>
+                    <div id="trackduration"></div>
+                    <div id="trackslider"></div>
+                </div>
+
+                <div id="smallinfo"></div>
+            </div>
+        </header><!-- #header-->
+        <input type="text" id="urlcode">
+
+        <div id="lyrics"></div>
+    </div><!-- #wrapper -->
+
+    <div id="dialog-unsupported" title="Suddenly!">
+        Flash might not be on.
+    </div>
+
+    <div id="dialog-vk" title="Login!" style="display: none; text-align: center; font-size: 14px;">
+        To search for work and play, you need to log into vkontakte. So here's magic button: <center><span id="login_vk" onclick="vkSearch.activate();"></span></center>
+    </div>
+
+    <div id="vk_api_transport" style="display: none;"></div>
+
+    <div style="display: none;">
+        <div id="track_aid"></div>
+        <div id="track_owner"></div>
+    </div>
+
+    <div style="display: none;">
+        <div id="access_token">{{ACCESS_TOKEN}}</div>
+    </div>
+
+    <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
+    <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
+    <script type="text/javascript" src="/js/frameworks/mustache.js"></script>
+
+    <script type="text/javascript" src="/js/small_main.js?v=1"></script>
+
+    <!-- Tracks -->
+    <script type="text/javascript" src="/js/classes/Tracks/Track.js"></script>
+    
+    <!-- Search engines -->
+    <script type="text/javascript" src="/js/classes/Search/AbstractSearchEngine.js"></script>
+    <script type="text/javascript" src="/js/classes/Search/VKSearchEngine.js"></script>
+
+    <script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>
+    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter1689589 = new Ya.Metrika({id:1689589,
+                        clickmap:true,
+                        trackLinks:true,
+                        trackHash:true});
+            } catch(e) { }
+        });
+        
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="//mc.yandex.ru/watch/1689589" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+  </body>
+</html>

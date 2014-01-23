@@ -1,0 +1,278 @@
+<!--Force IE6 into quirks mode with this comment tag WHAHAHAH -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>The Hipster Playlist</title>
+
+    <!-- meta tags: -->
+	<meta name="author" content="V@s3K (vas3k.ru)" />
+	<meta name="description" content="Music player of vkontakte with scrobbling
+and recommendations, last.fm, playlist, album, and other sweets" />
+	<meta name="copyright" content="Hiplyst 2013" />
+	<meta name="robots" content="" />
+	<meta name="generator" content="" />
+	<meta name="keywords" content="vkontakte, player, last.fm, recommendations, playlist, music
+	scrobbling, albums, sweets" />
+
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/favicon.png" />
+
+	<!-- css: -->
+    <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.8.4.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen, projection" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css" media="screen, projection" />
+    <link rel="stylesheet" type="text/css" href="/css/controls.css" media="screen, projection" />
+    <link rel="stylesheet" type="text/css" href="/css/playlist.css?v=2" media="screen, projection" />
+    <link rel="stylesheet" href="/js/imageflow/imageflow.packed.css" type="text/css" />
+
+    <!--[if IE]>
+        <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--[if IE]>
+        <script type="text/javascript">
+            document.createElement('header');
+            document.createElement('nav');
+            document.createElement('section');
+            document.createElement('article');
+            document.createElement('aside');
+            document.createElement('footer');
+        </script>
+    <![endif]-->
+
+</head>
+<body>
+    <div id="header">
+        <div id="playbackControl">
+            <div id="button_prev"><button></button></div>
+            <div id="button_play"><button></button></div>
+            <div id="button_next"><button></button></div>
+        </div>
+
+        <div id="volume">
+            <div id="vol_slider"></div>
+            <a href="#" id="tweetTrack" onclick="player.tweetNowPlaying(); event.preventDefault();"><img src="/images/icons/twitter.png" title="Tweet song" /></a>
+        </div>
+
+        <div id="progress">
+            <div id="progressbar"></div>
+            <div id="trackposition"></div>
+            <div id="tracktitle"></div>
+            <div id="trackduration"></div>
+            <div id="trackslider"></div>
+            <div id="smallinfo"></div>
+        </div>
+
+        <div id="player_buttons">
+            <div id="button_shuffle"><button></button></div>
+            <div id="button_repeat"><button></button></div>
+            <span id="repeat_status">all</span>
+        </div>
+
+        <div id="search">
+            <img src="/images/icons/add.png" id="showSearchCombo" />
+            <input type="text" name="q" id="q" placeholder="Поиск" />
+            <div id="searchOptions">
+                <input type="checkbox" id="removeDuplicates" checked="checked" /> <label for="removeDuplicates">Remove duplicates</label>
+            </div>
+        </div>
+    </div>
+
+    <div id="container">
+        <div id="ajaxContent">
+            <div id="ajaxContentFrame">
+                <h1>Hi</h1>
+                <p>Замутим оргию?</p>
+            </div>
+        </div>
+        <div id="playlist">
+            <div id="playlist_albums" class="imageflow"></div>
+
+            <div id="playlist_controls">
+                <input type="checkbox" id="check-all" />
+                <div id="button_delete"><button onclick="player.listController.applyRemoveSelected();">Delete selected</button></div>
+                <div id="button_doubles"><button onclick="player.listController.applyDoublesFilter();">Delete duplicates</button></div>
+                <div id="button_only_artist"><button onclick="player.listController.applyArtistFilter();">Similarly, by artist</button></div>
+                <div id="button_only_title"><button onclick="player.listController.applyTitleFilter();">Title only</button></div>
+            </div>
+
+            <div id="big_loader">
+                <img src="/images/loaders/big-playlist.gif" alt="LOADING..." />
+            </div>
+
+            <ul id="sortable"></ul>
+
+            <div id="show_more">Get more &darr;</div>
+        </div>
+    </div>
+
+    <div id="leftSidebar">
+        <div class="innertube">
+            <ul id="sidebarMainMenu"></ul>
+
+            <div class="sidebarItem">
+                <span class="dir">Recent Searches</span>
+                <ul id="lastsearches"></ul>
+            </div>
+
+            <div class="sidebarItem">
+                <span class="dir"> Searches <small onclick="player.listController.saveSearch(); event.stopPropagation();"><img src="/images/icons/action_bigadd.png" alt="new" title="Add the current search string" /></small> <img src="/images/loaders/sidebar.gif" alt="X" id="search_loader" /></span>
+                <ul id="savedsearches"></ul>
+            </div>
+
+            <div class="sidebarItem">
+                <span class="dir"> Playlists <small onclick="gui.sidebar_gui.toggleCreatePlaylistForm(); event.stopPropagation();"><img src="/images/icons/action_bigadd.png" alt="new" title="Create new playlist" /></small> <img src="/images/loaders/sidebar.gif" alt="X" id="playlist_loader" /></span>
+                <span id="newplaylist" style="display: none;">
+                    <input type="text" name="name" />
+                    <small onclick="player.listController.createPlaylist($('#newplaylist input').val());"> <img src="/images/icons/action_accept.png" alt="done" title="Create (Enter)" /></small>
+                </span>
+                <ul id="playlistlist"></ul>
+            </div>
+
+            <div class="sidebarItem">
+                <span class="dir"> Sweets <img src="/images/loaders/sidebar.gif" alt="X" id="smart_loader" /></span>
+                <ul id="otherlist"></ul>
+            </div>
+
+            <div class="sidebarItem">
+                <span class="dir"> Recommendations <img src="/images/loaders/sidebar.gif" alt="X" id="recommend_loader" /></span>
+                <ul id="recommendationslist" style="display: none;"></ul>
+            </div>
+
+            <div class="sidebarItem">
+                <span class="dir"> Tops Radio </span>
+                <ul id="radiolist" style="display: none;"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="rightSidebar">
+        <div class="innertube">
+            <strong id="artist_title"></strong><br />
+            <small id="artist_url"></small><br />
+            <span id="artist_img"></span><br />
+            <span id="artist_similar"></span><br /><br />
+            <span id="artist_text"></span><br />
+        </div>
+    </div>
+
+    <div id="footer">
+        <div id="footer_links">
+            <a href="/logout/"><img src="/images/icons/exit.png" title="Log out" /></a>
+        </div>
+        <div id="buttons">
+            <a href="#" onclick="window.open('http://www.last.fm/api/auth?api_key=9530d1e6f1d1b81032f024e99d8771b9', 'Last.fm login', 'width=800,height=600,resizable=yes,scrollbars=yes,status=no'); return false;">
+                <img src="/images/icons/lastfm.png" alt="Last.fm" title="Log into last.fm" />
+            </a>
+            <a href="#" onclick="player.searchController.activate('vk'); return false;">
+                <img src="/images/icons/vkontakte.png" alt="Vkontakte" title="Login vkontakte" />
+            </a>
+        </div>
+    </div>
+
+    <div id="dialog-unsupported" title="Suddenly!">
+        <b>Something is wrong when initializing the player. May be several reasons:</b><br />
+        <ul>
+            <li>Flash is disabled or locked</li>
+            <li>Necessary script is missing</li>
+            <li>Vkontakte disabler broke</li>
+            <li>Any problems and we'll mend: <a href="mailto:superdude23323@yahoo.com">superdude23323@yahoo.com</a></li>
+        </ul>
+    </div>
+
+    <div id="dialog-vk" title="Login!" style="display: none; text-align: center; font-size: 14px;">
+        To search for work and play, you need to log into vkontakte. So here's magic button: <center><span id="login_vk" onclick="player.searchController.activate('vk'); return false;"></span></center>
+        <br/> Hint: Sometimes after this we need to refresh the page
+    </div>
+
+    <div id="dialog-lyrics" title="Lyrics">
+        <img src="/images/icons/close_window.png" alt="X" title="Close lyrics" onclick="$(this).parent().fadeOut();" />
+        <div></div>
+    </div>
+
+    <div id="searchOptionsCombo">
+        <input type="checkbox" id="onlyArtist" /> <label for="onlyArtist">Artist</label><br />
+        <input type="checkbox" id="onlyTrack" /> <label for="onlyTrack">Name</label>
+    </div>
+
+    <div id="small_error"></div>
+    <div id="small_ok">All is well, ok! I am a good program and I have a lot to eat.</div>
+
+    <div id="vk_api_transport" style="display: none;"></div>
+
+    <div style="display: none;">
+        <div id="access_token">{{ACCESS_TOKEN}}</div>
+    </div>
+
+    <!-- Libs -->
+    <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
+    <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
+    <script type="text/javascript" src="/js/frameworks/mustache.js"></script>
+    <script type="text/javascript" src="/js/frameworks/iscroll.js"></script>
+    <script type="text/javascript" src="/js/imageflow/imageflow.packed.js"></script>
+
+    <!-- Main -->
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    <!-- Filters -->
+    <script type="text/javascript" src="/js/classes/Filters.js"></script>
+
+    <!-- Tracks -->
+    <script type="text/javascript" src="/js/classes/Tracks/Track.js?v=1"></script>
+
+    <!-- Info -->
+    <script type="text/javascript" src="/js/classes/Info/AbstractInfo.js"></script>
+    <script type="text/javascript" src="/js/classes/Info/LastFmInfo.js"></script>
+
+    <!-- Lists -->
+    <script type="text/javascript" src="/js/classes/Lists/AbstractList.js?v=2"></script>
+    <script type="text/javascript" src="/js/classes/Lists/LoveList.js?v=1"></script>
+    <script type="text/javascript" src="/js/classes/Lists/MyAudioList.js"></script>
+    <script type="text/javascript" src="/js/classes/Lists/NowPlayingList.js?v=2"></script>
+    <script type="text/javascript" src="/js/classes/Lists/RecentList.js"></script>
+    <script type="text/javascript" src="/js/classes/Lists/RecommendList.js"></script>
+    <script type="text/javascript" src="/js/classes/Lists/SearchList.js"></script>
+    <script type="text/javascript" src="/js/classes/Lists/UserPlayList.js?v=1"></script>
+    <script type="text/javascript" src="/js/classes/Lists/AlbumList.js"></script>
+    <script type="text/javascript" src="/js/classes/Lists/RadioList.js"></script>
+
+    <!-- Scrobblers -->
+    <script type="text/javascript" src="/js/classes/Scrobblers/LastFmScrobbler.js"></script>
+
+    <!-- Search engines -->
+    <script type="text/javascript" src="/js/classes/Search/AbstractSearchEngine.js"></script>
+    <script type="text/javascript" src="/js/classes/Search/VKSearchEngine.js?v=2"></script>
+
+
+    <!-- Controllers -->
+    <script type="text/javascript" src="/js/classes/InfoController.js"></script>
+    <script type="text/javascript" src="/js/classes/ListController.js"></script>
+    <script type="text/javascript" src="/js/classes/PlaybackController.js"></script>
+    <script type="text/javascript" src="/js/classes/ScrobblerController.js"></script>
+    <script type="text/javascript" src="/js/classes/SearchController.js"></script>
+
+    <!-- Main -->
+    <script type="text/javascript" src="/js/classes/Gui/SidebarGui.js"></script>
+    <script type="text/javascript" src="/js/classes/Gui/ListGui.js"></script>
+    <script type="text/javascript" src="/js/classes/Gui/AlbumsGui.js"></script>
+    <script type="text/javascript" src="/js/classes/Gui.js"></script>
+    <script type="text/javascript" src="/js/classes/Player.js?v=1"></script>
+
+    <script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>
+
+    <!-- Yandex.Metrika -->
+    <script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript"></script>
+    <div style="display:none;"><script type="text/javascript">
+    try { var yaCounter1689589 = new Ya.Metrika(1689589);
+    yaCounter1689589.clickmap();
+    yaCounter1689589.trackLinks({external: true});
+    } catch(e){}
+    </script></div>
+    <noscript><div style="position:absolute"><img src="//mc.yandex.ru/watch/1689589" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika -->
+
+</body>
+</html>

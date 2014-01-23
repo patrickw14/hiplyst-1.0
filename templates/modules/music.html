@@ -1,0 +1,61 @@
+
+<div class="search">
+    <h1>Music search</h1>
+    <input type="text" name="query" class="search-query" id="music-search" />
+    <button class="search-button">Search</button>
+
+    <div class="clearfix"></div>
+
+    <div class="search-params">
+        <input type="checkbox" name="duplicates" class="search-param-duplicates" id="music-search-param-duplicates" checked="checked" />
+        <label for="music-search-param-duplicates">Remove duplicates</label>
+        <input type="checkbox" name="duplicates" class="search-param-artistonly" id="music-search-param-artistonly" />
+        <label for="music-search-param-artistonly">Exactly by artist</label>
+    </div>
+
+    <div class="search-links">
+        <a href="#" onclick="player.listController.saveSearch($('#music-search').val());">Save</a>
+        <a href="#" onclick="gui.music_gui.clearSearchBox();">Clear</a>
+    </div>
+</div>
+
+<div class="list-view">
+    <span class="list-buttons" id="music-search-buttons" data-list-id="music-tracks" data-list-name="search_list" style="display: none;">
+        <span class="activator"></span>
+        <span class="list-buttons-onactive">
+            <span class="list-selectall-button">Select all</span>
+            <span class="list-remove-button">Remove</span>
+            <span class="list-addto-button">
+                Add to...
+                <span class="add_to_popup">
+                    <span class="add_to_popup-list"></span>
+                </span>
+            </span>
+        </span>
+    </span>
+    <div id="music-tracks"></div>
+</div>
+
+<div class="columns" id="music-lists">
+    <div class="column column-50">
+        <h1>
+            Listening history
+            <span class="list-buttons" data-list-id="listening_history" data-list-name="history_list">
+                <span class="activator"></span>
+                <span class="list-buttons-onactive">
+                    <span class="list-selectall-button">Select all</span>
+                    <span class="list-addto-button">
+                        Add to...
+                        <span class="add_to_popup">
+                            <span class="add_to_popup-list"></span>
+                        </span>
+                    </span>
+                </span>
+            </span>
+        </h1>
+        <div id="listening_history">
+            <div class="list_loader"></div>
+        </div>
+    </div>
+
+</div>

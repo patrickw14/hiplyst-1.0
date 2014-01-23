@@ -1,0 +1,64 @@
+{% extends "static_layout.html" %}
+
+{% block body %}
+    <div id="preview_block" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+      <!-- add playlists here -->
+    </div>
+
+    <div id="share_block">
+        <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="facebook,twitter,gplus"></div>
+    </div>
+
+    <div id="center_block">
+        <div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/sound_high_icon&32.png');">
+                <h1>Player</h1>
+                <div>Listen to user-created playlists or search our vast library for your favorite songs and artists.</div>
+            </div>
+        </div>
+
+        <div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/contact_card_icon&32.png');">
+              <h1>Rep points</h1>
+              <div>The better playlists you make, the more rep you get, the more fun you'll have. </div>
+            </div>
+        </div>
+
+        <!--<div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/headphones_icon&32.png');">
+                <h1>Last.fm</h1>
+                <div>Recommendations from site <a href="http://last.fm">last.fm</a> — largest online catalog of music on the internet.</div>
+            </div>
+        </div>-->
+
+        <div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/2x2_grid_icon&32.png');">
+                <h1>Artists and albums</h1>
+                <div>Search artists and related artists and listen to entire albums.</div>
+            </div>
+        </div>
+
+        <div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/eye_icon&32.png');">
+                <h1>Lyrics</h1>
+                <div>Open the lyrics and sing along. Share songs with friends via social networks.</div>
+            </div>
+        </div>
+  
+        <div class="center_50_block">
+            <div class="inside_block" style="background-image: url('/images/icons/small/black/image_text_icon&32.png');">
+                <h1>Playlists</h1>
+                <div>Create, manage, and share your own playlists. Like or dislike other user's playlists.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="start_button">
+        <a href="/register/" class="blue">Start making playlists</a>
+    </div>
+{% endblock %}
+
+
+{% block additional_block %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "static_layout.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block body %}
+    <div id="bigbody">
+        <div id="usererror">
+            {{ message }}<br/><br/>
+            <a href="javascript: history.go(-1)">&larr; Back</a>
+        </div>
+    </div>
+{% endblock %}         

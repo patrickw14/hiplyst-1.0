@@ -1,0 +1,21 @@
+{% extends "static_layout.html" %}
+
+{% block title %}Migration{% endblock %}
+
+{% block body %}
+
+
+    <form method="get" action=".">
+        <span><label for="key"><a href="http://p.vas3k.ru/migrate" style="font-size: 24px;">Key:</a>&nbsp;&nbsp;</label> <input type="text" id="key" name="id" /></span>
+        <span><input type="submit" value="Move" onclick="$(this).hide(); $('#loader').show();" /></span>
+        <span><img id="loader" src="/images/loaders/big-playlist.gif" style="display: none;" /></span>
+    </form>
+{% endblock %}
+
+{% block additional_block %}
+    <div style="position: absolute; top: 40%; left: 50%; margin-left: -500px; width: 300px; text-align: right; background-color: rgba(255, 255, 255, 0); z-index: 20; padding: 20px;">
+        In connection with the move to the new database to manually remove all your playlists to your new account.
+        Transfer of accounts from the old player is complicated because of the different models of hashing passwords.
+        So you have to log in to the old player, pass <a href="http://p.vas3k.ru/migrate">here</a> and
+        click "Transfer" or copy your private key and enter in a field on the right.</div>
+{% endblock %}

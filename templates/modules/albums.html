@@ -1,0 +1,31 @@
+<div class="search">
+    <h1>Search albums</h1>
+    <input type="text" name="query" class="search-query" id="albums-search" />
+    <button class="search-button">Search</button>
+
+    <div class="clearfix"></div>
+
+    <div class="search-params">
+
+    </div>
+
+    <div class="search-links">
+        <a href="#" onclick="gui.albums_gui.clearSearchBox();">Clean</a>
+    </div>
+</div>
+
+<div class="big-album-view">
+    <span class="list-buttons" id="albums-search-buttons" data-list-id="albums-view" style="display: none;">
+        <span class="activator"></span>
+        <span class="list-buttons-onactive">
+            <span class="list-selectall-button">Select all</span>
+            <span class="list-addto-button">
+                Add to...
+                <span class="add_to_popup">
+                    <span class="add_to_popup-list"></span>
+                </span>
+            </span>
+        </span>
+    </span>
+    <div id="albums-view"></div>
+</div>
