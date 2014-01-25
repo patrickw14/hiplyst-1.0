@@ -150,7 +150,8 @@ body {
     margin-top: 20px;
     width: 100%;
     height: 450px;
-    background: #222222;
+    background: #385B9F;
+    /* background: #222222; */
     background-size: cover;
     box-shadow: 0 1px 3px #555 inset;
     overflow: hidden;
@@ -306,16 +307,16 @@ body {
     -moz-box-shadow: inset 0 0 1px #222222;
     -webkit-box-shadow: inset 0 0 1px #222222;
     box-shadow: inset 0 0 1px #222222;
-    background: orange;
-    background: -webkit-gradient(linear, left top, left bottom, from(orange), to(orange));
-    background: -moz-linear-gradient(top,  orange,  orange);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='orange');
-}
-.blue:hover {
     background: #F88017;
     background: -webkit-gradient(linear, left top, left bottom, from(#F88017), to(#F88017));
     background: -moz-linear-gradient(top,  #F88017,  #F88017);
     filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#F88017', endColorstr='#F88017');
+}
+.blue:hover {
+    background: #ED6639;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ED6639), to(#ED6639));
+    background: -moz-linear-gradient(top,  #ED6639,  #ED6639);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ED6639', endColorstr='#ED6639');
 }
 .blue:active {
     color: #80bed6;
@@ -350,12 +351,12 @@ body {
     margin-top: 100px;
     padding: 20px;
     text-align: left;
-    background: white;
+    background: #385B9F;
 }
 
     #footer a {
         margin: 0 10px;
-        color: black;
+        color: white;
         text-shadow: none;
     }
 
