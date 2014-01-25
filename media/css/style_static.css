@@ -150,7 +150,7 @@ body {
     margin-top: 20px;
     width: 100%;
     height: 450px;
-    background: orange;
+    background: #222222;
     background-size: cover;
     box-shadow: 0 1px 3px #555 inset;
     overflow: hidden;
@@ -253,7 +253,7 @@ body {
         margin: 5px 0;
         border-style: solid;
         border-width: 1px;
-        border-color: black;
+        border-color: #CCCCCC;
         border-radius: 5px;
         padding-left: 5px;
     }
@@ -285,9 +285,9 @@ body {
          -webkit-border-radius: 2em;
          -moz-border-radius: 2em;
          border-radius: 2em;
-         -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-         -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-         box-shadow: 0 1px 2px rgba(0,0,0,.2);
+         -moz-box-shadow:    inset 0 0 1px #222222;
+         -webkit-box-shadow: inset 0 0 1px #222222;
+         box-shadow:         inset 0 0 1px #222222;
      }
 
     #start_button a:hover {
@@ -301,18 +301,21 @@ body {
 
 /* blue */
 .blue {
-    color: #d9eef7;
-    border: solid 1px #0076a3;
-    background: #0095cd;
-    background: -webkit-gradient(linear, left top, left bottom, from(#00adee), to(#0078a5));
-    background: -moz-linear-gradient(top,  #00adee,  #0078a5);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#00adee', endColorstr='#0078a5');
+    color: white;
+    text-shadow: none;
+    -moz-box-shadow: inset 0 0 1px #222222;
+    -webkit-box-shadow: inset 0 0 1px #222222;
+    box-shadow: inset 0 0 1px #222222;
+    background: orange;
+    background: -webkit-gradient(linear, left top, left bottom, from(orange), to(orange));
+    background: -moz-linear-gradient(top,  orange,  orange);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='orange', endColorstr='orange');
 }
 .blue:hover {
-    background: #007ead;
-    background: -webkit-gradient(linear, left top, left bottom, from(#0095cc), to(#00678e));
-    background: -moz-linear-gradient(top,  #0095cc,  #00678e);
-    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#0095cc', endColorstr='#00678e');
+    background: #F88017;
+    background: -webkit-gradient(linear, left top, left bottom, from(#F88017), to(#F88017));
+    background: -moz-linear-gradient(top,  #F88017,  #F88017);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#F88017', endColorstr='#F88017');
 }
 .blue:active {
     color: #80bed6;
@@ -347,7 +350,7 @@ body {
     margin-top: 100px;
     padding: 20px;
     text-align: left;
-    background: orange;
+    background: white;
 }
 
     #footer a {
