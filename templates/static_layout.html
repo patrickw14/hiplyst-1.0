@@ -20,7 +20,9 @@ and recommendations, last.fm, playlist, album, and sweets" />
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/style_static.css?v=3.0" />
 
-    <script type="text/javascript" src="/js/frameworks/jquery-1.6.2.min.js"></script>
+    <!--<script type="text/javascript" src="/js/frameworks/jquery-1.6.2.min.js"></script>-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/typeahead.js"></script>
     <script type="text/javascript" charset="utf-8" src="/js/jquery.leanModal.min.js"></script>
     <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
     <script type="text/javascript">
@@ -31,6 +33,19 @@ and recommendations, last.fm, playlist, album, and sweets" />
                 preview_item++;
                 preview_item %= 4;
                 $("#preview_item_" + preview_item).fadeIn("fast");
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.quicksearch .typeahead').typeahead({
+                name: 'quicksearch',
+                local: [
+                    "The xx",
+                    "The Ramones",
+                    "The Beatles",
+                    "The The"
+                ]
             });
         });
     </script>
@@ -52,7 +67,7 @@ and recommendations, last.fm, playlist, album, and sweets" />
     <div id="header">
         <a href="/" id="logo" style="text-decoration:none;">hip<font face="cursive" style="color:orange;">lyst</font></a>
         <div id="logins">
-          <input id="top-search-filter" type="text" placeholder="Search - playlists, genres, etc." name="query" style="position:absolute;right:375px;top:30px;width:290px;height:20px;padding-left:5px;margin-top:-24px;">
+          <input id="top-search-filter" type="text" placeholder="Search - playlists, genres, etc." name="quicksearch" style="position:absolute;right:375px;top:30px;width:290px;height:20px;padding-left:5px;margin-top:-24px;">
         </div>
         <!--<a href="/register/" id="register">Sign up</a>-->
         <a href="#signUpModal" id="modaltrigger" style="position:absolute;right:300px;top:30px;">Sign up</a>
