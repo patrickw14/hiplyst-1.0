@@ -84,7 +84,7 @@ body {
     background-color: #EEEEEE;
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     font-size: 12px;
-    text-shadow: 1px 1px 1px #FFF;
+    /*text-shadow: 1px 1px 1px #FFF;*/
     /* background-image: url('../images/body_pattern.png'); */
 }
 
@@ -173,10 +173,8 @@ body {
     #logo {
         display: block;
         position: absolute;
-        top: 14px;
-        left: 20px;
+        top: 20px;
         height: 40px;
-        padding-left: 50px;
         font-size: 30px;
         color: #444;
         /* background: transparent url("../images/phpRmajtpAM.png") 11px 0px no-repeat; */
@@ -218,17 +216,41 @@ body {
             width: 50px;
         }
 
+#preview_background {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    background: #385B9F;
+    background-size: cover;
+    height: 300px;
+    /*background-image:url('../images/crowd.jpg');*/
+    box-shadow: 0 1px 3px #555 inset;
+
+}
+
 #preview_block {
     position: relative;
-    margin-top: 20px;
-    width: 100%;
-    height: 450px;
-    background: #385B9F;
-    /* background: #222222; */
-    background-size: cover;
-    box-shadow: 0 1px 3px #555 inset;
-    overflow: hidden;
+    margin: 0 auto;
+    width: 95%;
+    max-width: 900px;
+    /*overflow: hidden;*/
 }
+
+    #preview_block .preview_header {
+        margin-top: 50px;
+        width: 70%;
+        font-size: 32pt;
+        font-family: "Helvetica";
+        color: white;
+        float: left;
+    }
+
+    #preview_block .preview_signup {
+        margin-top: 20px;
+        font-size: 15pt;
+        width: 30%;
+        float: right;
+    }
 
     #preview_block .preview_item {
         position: absolute;
@@ -240,11 +262,9 @@ body {
     }
 
     #preview_block .big_search {
-        position:relative;
-        margin: 0 auto;
-        margin-top: 50px;
-        padding-left: 120px;
-        width: 900px;
+        margin-top: 20px;
+        width: 70%;
+        float: left;
     }
 
 #share_block {

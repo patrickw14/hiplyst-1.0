@@ -66,16 +66,17 @@ and recommendations, last.fm, playlist, album, and sweets" />
   <body>
     <div id="header">
         <a href="/" id="logo" style="text-decoration:none;">hip<font face="cursive" style="color:orange;">lyst</font></a>
+        <!--
         <div id="logins">
           <input id="top-search-filter" type="text" placeholder="Search - playlists, genres, etc." name="quicksearch" style="position:absolute;right:375px;top:30px;width:290px;height:20px;padding-left:5px;margin-top:-24px;">
-        </div>
+        </div>-->
         <!--<a href="/register/" id="register">Sign up</a>-->
-        <a href="#signUpModal" id="modaltrigger" style="position:absolute;right:300px;top:30px;">Sign up</a>
+        <!--<a href="#signUpModal" id="modaltrigger" style="position:absolute;right:300px;top:30px;">Sign up</a>-->
         <div id="logins">
             <form action="/login/" method="post">
-                <span><label for="login"></label> <input style="padding-left:5px;" type="text" id="login" name="login" placeholder="Login" /></span><br />
-                <span><label for="password"></label> <input style="padding-left:5px;" type="password" id="password" name="password" placeholder="Password" /></span>
-                <span><input type="submit" value="Sign in" /></span>
+                <input type="text" id="login" name="login" placeholder="Login" />
+                <input type="password" id="password" name="password" placeholder="Password" />
+                <input type="submit" value="Sign in" />
             </form>
         </div> 
     </div>
