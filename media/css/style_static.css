@@ -208,7 +208,7 @@ body {
         
         #logins input {
             border: 2px solid #ccc;
-            border-radius: 3px;
+            border-radius: 5px;
             display: inline-block;
             width: 130px;
             font-size: 13px;
@@ -261,7 +261,7 @@ body {
 
     .preview_signup input {
         border: 2px solid #ccc;
-        border-radius: 3px;
+        border-radius: 5px;
         display: inline-block;
         width: 220px;
         font-size: 16px;
@@ -277,7 +277,6 @@ body {
     .preview_signup input[type=submit] {
         width: 85px;
     }
-
 
     #preview_block .preview_item {
         position: absolute;
