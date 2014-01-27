@@ -90,11 +90,16 @@ body {
 
 /* Styles */
 
+#header_container {
+    height: 50px;
+    background-color: #003;
+    width: 100%;
+}
+
 #header {
     position: relative;
     margin: 0 auto;
     width: 900px;
-    height: 60px;
 }
 
 .typeahead {
@@ -173,7 +178,7 @@ body {
     #logo {
         display: block;
         position: absolute;
-        top: 20px;
+        top: 10px;
         height: 40px;
         font-size: 30px;
         color: #444;
@@ -190,36 +195,38 @@ body {
 
     #logins {
         position: absolute;
-        top: 20px;
+        top: 15px;
         right: 20px;
-        width: 290px;
+        width: 335px;
     }
-
+        
         #logins label {
             display: inline-block;
             width: 60px;
             text-align: right;
         }
-
+        
         #logins input {
-            border: solid 1px #CCC;
+            border: 2px solid #ccc;
             border-radius: 3px;
             display: inline-block;
-            width: 150px;
+            width: 130px;
             font-size: 13px;
             padding: 2px;
             position: relative;
             top: -2px;
         }
+        #logins input:focus {
+            border: 2px solid #0097cf;
+        }
 
         #logins input[type=submit] {
             width: 50px;
         }
-
+        
 #preview_background {
     position: relative;
     margin: 0 auto;
-    margin-top: 20px;
     background: #385B9F;
     background-size: cover;
     height: 300px;
@@ -246,11 +253,31 @@ body {
     }
 
     #preview_block .preview_signup {
-        margin-top: 20px;
+        margin-top: 30px;
         font-size: 15pt;
         width: 30%;
         float: right;
     }
+
+    .preview_signup input {
+        border: 2px solid #ccc;
+        border-radius: 3px;
+        display: inline-block;
+        width: 220px;
+        font-size: 16px;
+        padding: 4px;
+        position: relative;
+        top: -2px;
+    }
+
+    .preview_signup input:focus {
+        border: 2px solid #0097cf;
+    }
+
+    .preview_signup input[type=submit] {
+        width: 85px;
+    }
+
 
     #preview_block .preview_item {
         position: absolute;

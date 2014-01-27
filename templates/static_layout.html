@@ -53,7 +53,6 @@ and recommendations, last.fm, playlist, album, and sweets" />
     {% endblock %}
     <!--[if IE]>
         <script>
-            // Сосите мужской хуй, мудачки вендузятские. Я заставлю ваше говно любить мой HTML 5.
             document.createElement('header');
             document.createElement('nav');
             document.createElement('section');
@@ -64,21 +63,17 @@ and recommendations, last.fm, playlist, album, and sweets" />
     <![endif]-->
   </head>
   <body>
-    <div id="header">
-        <a href="/" id="logo" style="text-decoration:none;">hip<font face="cursive" style="color:orange;">lyst</font></a>
-        <!--
-        <div id="logins">
-          <input id="top-search-filter" type="text" placeholder="Search - playlists, genres, etc." name="quicksearch" style="position:absolute;right:375px;top:30px;width:290px;height:20px;padding-left:5px;margin-top:-24px;">
-        </div>-->
-        <!--<a href="/register/" id="register">Sign up</a>-->
-        <!--<a href="#signUpModal" id="modaltrigger" style="position:absolute;right:300px;top:30px;">Sign up</a>-->
-        <div id="logins">
-            <form action="/login/" method="post">
-                <input type="text" id="login" name="login" placeholder="Login" />
-                <input type="password" id="password" name="password" placeholder="Password" />
-                <input type="submit" value="Sign in" />
-            </form>
-        </div> 
+    <div id="header_container">
+        <div id="header">
+            <a href="/" id="logo" style="color:#ccc; text-decoration:none;">hip<font face="cursive" style="color:#f90;">lyst</font> </a>
+            <div id="logins">
+                <form action="/login/" method="post">
+                    <input type="text" id="login" name="login" placeholder="Username" />
+                    <input type="password" id="password" name="password" placeholder="Password" />
+                    <input type="submit" value="Sign in" />
+                </form>
+            </div> 
+        </div>
     </div>
 
     <div id="signUpModal" style="display:none;">
