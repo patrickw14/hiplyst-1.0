@@ -1,0 +1,54 @@
+{% extends "static_layout.html" %}
+
+{% block body %}
+        <div id="player">
+            <div id="top-controls">
+                <div id="top-controls-prev"></div>
+                <div id="top-controls-play" class="playbutton-play"></div>
+                <div id="top-controls-next"></div>
+                <div id="top-controls-volume">
+                    <div id="volume_slider">
+                        <div style="position: relative; width: 90px;">
+                            <div class="ui-slider-handle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="top-info">
+                <div id="top-info-cover" style="">
+                    <img src="/images/icons/show_lyrics.png" id="top-show-lyrics" title="Show lyrics" alt="" />
+                    <img src="/images/icons/show_mini.png" id="top-open-mini" title="Open in mini player" alt="" />
+                </div>
+                <div id="top-info-title"></div>
+                <div id="top-info-artist"></div>
+
+                <div id="top-info-progress">
+                    <div id="top-info-progress-left_time"></div>
+                    <div id="top-info-progress-slider">
+                        <div style="position: absolute; left: 0; right: 10px;">
+                            <div class="ui-slider-handle"></div>
+                        </div>
+                        <div id="loading_bar"></div>
+                    </div>
+                    <div id="top-info-progress-right_time"></div>
+                </div>
+
+                <div id="top-info-nowplaying" onclick="$('#nowplaying_list').toggle(); event.preventDefault();">
+                    <img src="/images/icons/small/black/list_num_icon&16.png" alt="!" />
+                </div>
+
+                <div id="top-info-tweet" onclick="player.tweetNowPlaying(); event.preventDefault();">
+                    <img src="/images/icons/small/black/twitter_2_icon&16.png" alt="!" />
+                </div>
+            </div>
+
+            <div id="top-search">
+                <input type="text" name="query" id="top-search-filter" placeholder="Quick Search" />
+            </div>
+        </div>
+
+{% endblock %}
+
+{% block additional_block %}
+{% endblock %}

@@ -19,6 +19,7 @@ and recommendations, last.fm, playlist, album, and sweets" />
 
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/style_static.css?v=3.0" />
+    <link rel="stylesheet" type="text/css" media="screen, projection" href="/css/player.css" />
 
     <!--<script type="text/javascript" src="/js/frameworks/jquery-1.6.2.min.js"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -66,6 +67,7 @@ and recommendations, last.fm, playlist, album, and sweets" />
     <div id="header_container">
         <div id="header">
             <a href="/" id="logo" style="color:#ccc; text-decoration:none;">hip<font face="cursive" style="color:#f90;">lyst</font> </a>
+            {% if not user.is_authenticated %}
             <div id="logins">
                 <form action="/login/" method="post">
                     <input type="text" id="login" name="login" placeholder="Username" />
@@ -73,18 +75,12 @@ and recommendations, last.fm, playlist, album, and sweets" />
                     <input type="submit" value="Sign in" />
                 </form>
             </div> 
+            {% else %}
+            <div id="logins">
+                <a href="/logout/" title="Logout">Logout</a>
+            </div>
+            {% endif %}
         </div>
-    </div>
-
-    <div id="signUpModal" style="display:none;">
-      <h1 style="margin-left:4px;font-size:20px;color:black;">Register</h1>
-      <hr>
-      <form class="form-signin" method="post" id="regform" action="/register/">
-      <h2 class="form-signin-heading"></h2>
-        <span><label for="login"></label> <input type="text" id="login" name="login" placeholder="Username" /></span><br />
-        <span><label for="password"></label> <input type="password" id="password" name="password" placeholder="Password" /></span><br />
-        <span><input class="blue" style="border-color:#EEEEEE;" type="submit" value="Sign up"/></span>
-      </form>
     </div>
 
     {% block body %}
@@ -94,9 +90,11 @@ and recommendations, last.fm, playlist, album, and sweets" />
     {% endblock %}
 
     {% block footer %}
+    {% if not user.is_authenticated %}
     <div id="footer">
       <font style="color:black;text-shadow:none;margin-left:20px;color:white;">&copy; 2013. Built with love by<a style="margin-left:5px;margin-right:5px;" href="https://twitter.com/pswilson14">Nick Roberts</a>and<a style="margin-left:5px;margin-right:5px;" href="https://twitter.com/pswilson14">Patrick Wilson</a><font style="margin-left:-4px;color:white;">.</font></font>
     </div>
+    {% endif %}
     {% endblock %}
 
     <script type="text/javascript">
