@@ -1,0 +1,146 @@
+/***********************************
+ ******* Typeahead css stuff *******
+ ***********************************/
+.typeahead,
+.tt-query,
+.tt-hint {
+  margin-top: 3px;
+  margin-left: 25px;
+  width: 400px;
+  height: 30px;
+  padding: 8px 12px;
+  font-size: 16px;
+  line-height: 14px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  outline: none;
+}
+
+.typeahead:focus {
+  border: 2px solid #0080ff;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  width: 422px;
+  margin-top: 12px;
+  margin-left: 22px;
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+/***********************************
+ **** Current Playlist Popover  ****
+ ***********************************/
+#current-playlist {
+  display: none;
+  position: fixed;
+  top: 60px;
+  right:450px;
+  width: 200px;
+  height: 400px;
+  background-color: #fff;
+  padding: 8px 0;
+  border: 2px solid #ccc;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+/***********************************
+ ** Navbar Login/Playlist Popover **
+ ***********************************/
+
+ #user-menu-open {
+  display: none;
+  position: fixed;
+  top: 60px;
+  /*right: 100px;*/
+  width: 300px;
+  height: 200px;
+  background-color: #fff;
+  padding: 8px 0;
+  border: 2px solid #ccc;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+ }
+
+  #user-menu-open .header {
+    position: absolute;
+    font-size: 18px;
+    font-color: #777;
+    margin-top: 5px;
+    margin-left: 15px;
+  }
+
+  #user-menu-open .view-my-profile {
+    position: absolute;
+    font-size: 14px;
+    font-color: #bbb;
+    margin-top: 105px;
+    margin-left: 15px;
+  }
+
+  #user-menu-open .user-settings {
+    position: absolute;
+    font-size: 14px;
+    font-color: #bbb;
+    margin-top: 130px;
+    margin-left: 15px;
+  }
+
+  #user-menu-open .logout {
+    position: absolute;
+    font-size: 14px;
+    font-color: #bbb;
+    margin-top: 155px;
+    margin-left: 15px;
+  }
+
+#container {
+  margin-top: 80px;
+}

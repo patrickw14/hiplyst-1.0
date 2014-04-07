@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name='yandex-verification' content='60a56478e386b81e' />
+    <meta name="google-site-verification" content="B8zgWa65q_o7zEV-YAA3rmgq4AlT-l37W-2nNbDE6pc" />
+    <link rel="icon" href="/images/hiplist-favicon.png">
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+
+    <title>Hiplyst | Shared music playlists, ranked by the community</title>
+
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" href="/css/bootstrap.css" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            preview_item = 0;
+            $(".preview_item").click(function() {
+                $(this).fadeOut("fast");
+                preview_item++;
+                preview_item %= 4;
+                $("#preview_item_" + preview_item).fadeIn("fast");
+            });
+        });
+    </script>
+    {% block js %}
+    {% endblock %}
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper">
+      <div class="container">
+        {% if user.is_authenticated %}
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        {% else %}
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+        {% endif %}
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a id="brand" class="navbar-brand" href="#" style="color:#ccc; text-decoration:none;">hip<font face="cursive" style="color:#f90;font-size:28px;">lyst</font></a>
+            </div>
+            <div class="navbar-collapse collapse">
+            {% if user.is_authenticated %}
+              <form class="navbar-form navbar-left" role="search">
+                <div class="input-group quicksearch">
+                  <input type="text" class="typeahead" placeholder="Search for playlists, users, genres, and more.">
+                </div>
+              </form>
+              <ul class="nav navbar-nav">
+                <li><a href="#make-playlist"><span class="glyphicon glyphicon-edit"></span> Create Playlist</a></li>
+                <li><a onclick="toggle_visibility('current-playlist', 'current-playlist-trigger');" id="current-playlist-trigger" class="current-playlist-trigger"><span class="glyphicon glyphicon-list"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-backward"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-play"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-step-forward"></span></a></li>
+              </ul>
+              <div id="user-menu">
+                <p class="navbar-text navbar-right">Signed in as <a href="#" id="user-menu-trigger" onclick="toggle_visibility('user-menu-open', 'user-menu');" class="navbar-link">{{user.username}}</a></p>
+              </div>
+            {% else %}
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <form class="navbar-form navbar-right" role="form" action="/login/" method="post">
+              <div class="navbar-login">
+                <div class="form-group">
+                  <input type="text" placeholder="Username" id="login" name="login" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="password" placeholder="Password" id="password" name="password" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </form>
+            </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="current-playlist">
+    </div>
+    <div id="user-menu-open">
+      <div class="header">Hey, {{ user.username }}!</div>     
+      <div class="view-my-profile menu-link"><span class="glyphicon glyphicon-user"></span> <a href="/#user" style="none">View my profile</a></div>
+      <div class="user-settings menu-link"><span class="glyphicon glyphicon-cog"></span> Settings</div>
+      <div class="logout menu-link"><span class="glyphicon glyphicon-log-out"></span> Not you? <a href="/logout/">Logout</a></div>
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    {% block additional_block %}
+    {% endblock %}
+
+    {% block footer %}
+    {% endblock %}
+    </div><!-- /.container -->
+
+    <script type="text/javascript">
+      $('.quicksearch').typeahead({                                
+        name: 'quicksearch',                                                          
+        local: [
+          "The xx",
+          "The Ramones",
+          "The Clash"
+        ]                                                                   
+      });
+    </script>
+    {% block extra-js %}
+    {% endblock %}
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter1689589 = new Ya.Metrika({id:1689589,
+                        clickmap:true,
+                        trackLinks:true,
+                        trackHash:true});
+            } catch(e) { }
+        });
+        
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="//mc.yandex.ru/watch/1689589" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/frameworks/typeahead.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.quicksearch .typeahead').typeahead({
+                name: 'quicksearch',
+                local: [
+                    "The xx",
+                    "The Ramones",
+                    "The Beatles",
+                    "The The"
+                ]
+            });
+        });
+    </script>
+    <script type="text/javascript">
+    //toggle visibility of user menu when username is clicked in menu bar
+    function toggle_visibility(elementId, selectorId) {
+       console.log("toggle");
+       var e = document.getElementById(elementId);
+       var trigger = document.getElementById(selectorId);
+       if(e.style.display == 'block'){
+          e.style.display = 'none';
+       } else {
+          if (elementId == "user-menu-open"){
+            var offset = (findPosX(trigger)).toString();
+            e.style.right = offset+"px";
+          }else{
+            var offset = (findPosX(trigger)-75).toString();
+            e.style.left = offset+"px";
+          }
+          e.style.display = 'block';
+      }
+    }
+
+    function findPosX(obj) {
+    var curleft = 0;
+    if (obj.offsetParent) {
+        while (1) {
+            curleft+=obj.offsetLeft;
+            if (!obj.offsetParent) {
+                break;
+            }
+            obj=obj.offsetParent;
+        }
+    } else if (obj.x) {
+        curleft+=obj.x;
+    }
+    return curleft;
+    }
+
+
+    //Dismiss user menu if anything else is clicked.
+    $(document).click(function(e) {
+      var target = e.target;
+      if (!$(target).is('#user-menu-open') && !$(target).parents().is('#user-menu-open')
+          && !$(target).is('#user-menu-trigger')) {
+        console.log("user-menu-hide");
+        $('#user-menu-open').hide();
+      }
+      if (!$(target).is('#current-playlist') && !$(target).parents().is('#current-playlist')
+          && !$(target).is('#current-playlist-trigger') && !$(target).parents().is('#current-playlist-trigger')) {
+        console.log("current-playlist-hide");
+        $('#current-playlist').hide();
+      }
+    });
+    </script>
+  </body>
+</html>

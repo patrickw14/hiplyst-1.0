@@ -1,54 +1,109 @@
-{% extends "static_layout.html" %}
+{% extends "base.html" %}
+
+{% block css%}
+    <link type="text/css" href="/css/hiplyst.css" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-        <div id="player">
-            <div id="top-controls">
-                <div id="top-controls-prev"></div>
-                <div id="top-controls-play" class="playbutton-play"></div>
-                <div id="top-controls-next"></div>
-                <div id="top-controls-volume">
-                    <div id="volume_slider">
-                        <div style="position: relative; width: 90px;">
-                            <div class="ui-slider-handle"></div>
-                        </div>
-                    </div>
-                </div>
+		<div id="container">
+            <div id="mode-list">
+                <div class="mode-list-item">Home</div>
+                <div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>
+                <div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>
+                <div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>
+                <div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');">Artists</div>
             </div>
 
-            <div id="top-info">
-                <div id="top-info-cover" style="">
-                    <img src="/images/icons/show_lyrics.png" id="top-show-lyrics" title="Show lyrics" alt="" />
-                    <img src="/images/icons/show_mini.png" id="top-open-mini" title="Open in mini player" alt="" />
-                </div>
-                <div id="top-info-title"></div>
-                <div id="top-info-artist"></div>
-
-                <div id="top-info-progress">
-                    <div id="top-info-progress-left_time"></div>
-                    <div id="top-info-progress-slider">
-                        <div style="position: absolute; left: 0; right: 10px;">
-                            <div class="ui-slider-handle"></div>
-                        </div>
-                        <div id="loading_bar"></div>
-                    </div>
-                    <div id="top-info-progress-right_time"></div>
+            <div id="content-frame">
+                <div id="tab-user" class="tab" style="display: none;">
+                    {% include "modules/user.html" %}
                 </div>
 
-                <div id="top-info-nowplaying" onclick="$('#nowplaying_list').toggle(); event.preventDefault();">
-                    <img src="/images/icons/small/black/list_num_icon&16.png" alt="!" />
+                <div id="tab-playlists" class="tab" style="display: none;">
+                    {% include "modules/playlists.html" %}
                 </div>
 
-                <div id="top-info-tweet" onclick="player.tweetNowPlaying(); event.preventDefault();">
-                    <img src="/images/icons/small/black/twitter_2_icon&16.png" alt="!" />
+                <div id="tab-music" class="tab" style="display: none;">
+                    {% include "modules/music.html" %}
                 </div>
-            </div>
 
-            <div id="top-search">
-                <input type="text" name="query" id="top-search-filter" placeholder="Quick Search" />
+                <div id="tab-artist" class="tab" style="display: none;">
+                    {% include "modules/artist.html" %}
+                </div>
+
             </div>
         </div>
 
+        <div id="vk_api_transport" style="display: none;"></div>
+
+        <div>
+            <div id="access_token" style="display: none;">{{ACCESS_TOKEN}}</div>
+        </div>
 {% endblock %}
 
 {% block additional_block %}
+{% endblock %}
+
+{% block extra-js %}
+		<script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
+        <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
+		<script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
+    	<script type="text/javascript" src="/js/frameworks/mustache.js"></script>
+
+        <!-- Main -->
+        <script type="text/javascript" src="/js/main.js?v=3.0.9"></script>
+
+        <!-- Filters -->
+        <script type="text/javascript" src="/js/classes/Filters.js?v=3.0.9"></script>
+
+        <!-- Tracks -->
+        <script type="text/javascript" src="/js/classes/Tracks/Track.js?v=3.0.9"></script>
+
+        <!-- Info -->
+        <script type="text/javascript" src="/js/classes/Info/AbstractInfo.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Info/LastFmInfo.js?v=3.0.9"></script>
+
+        <!-- Lists -->
+        <script type="text/javascript" src="/js/classes/Lists/AbstractList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/LoveList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/MyAudioList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/NowPlayingList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RecentList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RecommendList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/SearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/ArtistSearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/MusicSearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/UserPlayList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/AlbumList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RadioList.js?v=3.0.9"></script>
+
+        <!-- Scrobblers -->
+        <script type="text/javascript" src="/js/classes/Scrobblers/LastFmScrobbler.js?v=3.0.9"></script>
+
+        <!-- Search engines -->
+        <script type="text/javascript" src="/js/classes/Search/AbstractSearchEngine.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Search/VKSearchEngine.js?v=3.0.9"></script>
+
+
+        <!-- Controllers -->
+        <script type="text/javascript" src="/js/classes/CoversController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/ListController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/PlaybackController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/ScrobblerController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/SearchController.js?v=3.0.9"></script>
+
+        <!-- Main -->
+        <script type="text/javascript" src="/js/classes/Gui/UserGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/MusicGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/ArtistGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/AlbumsGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/PlaylistsGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/RecommendationsGui.js?v=3.0.9"></script>
+
+        <script type="text/javascript" src="/js/classes/Gui/ListGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Player.js?v=3.0.9"></script>
+
+        <script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>
 {% endblock %}

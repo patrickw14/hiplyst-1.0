@@ -3,5 +3,6 @@
 *.pyc
 .DS_Store
 local_settings.py
+database.db
 
 lovemigrate.sql

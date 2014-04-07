@@ -1,6 +1,57 @@
-{% extends "static_layout.html" %}
+{% extends "base.html" %}
+
+{% block css %}
+    <link type="text/css" href="/css/landing.css" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
+    <!-- Carousel
+    ================================================== -->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="/images/bg-lion.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Example headline.</h1>
+              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="/images/bg-mac.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="/images/bg-abstract.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>One more for good measure.</h1>
+              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+    </div><!-- /.carousel -->
+
+
+    <!--
     <div id="preview_background">
     <div id="preview_block" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
         <div class="preview_header">
@@ -19,68 +70,8 @@
             <input class="typeahead" type="text" placeholder="Search for artists, songs, playlists and more.">
         </div>
     </div>
-    </div>
-
-    <div id="share_block">
-        <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
-        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="facebook,twitter,gplus"></div>
-    </div>
-    <!--<div id="center_block">
-        <div class="center_100_block">
-            <div class="inside_block">
-                <div class="quicksearch">
-                    <input class="typeahead" type="text" placeholder="Search for artists, songs, playlists and more.">
-                </div>
-            </div>
-        </div>
     </div>-->
-    <div id="center_block">
-        <div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/sound_high_icon&32.png');">
-                <h1>Player</h1>
-                <div>Listen to user-created playlists or search our vast library for your favorite songs and artists.</div>
-            </div>
-        </div>
 
-        <div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/contact_card_icon&32.png');">
-              <h1>Rep points</h1>
-              <div>The better playlists you make, the more rep you get, the more fun you'll have. </div>
-            </div>
-        </div>
-
-        <!--<div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/headphones_icon&32.png');">
-                <h1>Last.fm</h1>
-                <div>Recommendations from site <a href="http://last.fm">last.fm</a> — largest online catalog of music on the internet.</div>
-            </div>
-        </div>-->
-
-        <div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/2x2_grid_icon&32.png');">
-                <h1>Artists and albums</h1>
-                <div>Search artists and related artists and listen to entire albums.</div>
-            </div>
-        </div>
-
-        <div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/eye_icon&32.png');">
-                <h1>Lyrics</h1>
-                <div>Open the lyrics and sing along. Share songs with friends via social networks.</div>
-            </div>
-        </div>
-  
-        <div class="center_50_block">
-            <div class="inside_block" style="background-image: url('/images/icons/small/black/image_text_icon&32.png');">
-                <h1>Playlists</h1>
-                <div>Create, manage, and share your own playlists. Like or dislike other user's playlists.</div>
-            </div>
-        </div>
-    </div>
-
-    <div id="start_button">
-        <a href="/register/" class="blue">Start making playlists</a>
-    </div>
 {% endblock %}
 
 
