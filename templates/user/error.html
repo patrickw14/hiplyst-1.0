@@ -1,12 +1,24 @@
-{% extends "static_layout.html" %}
+{% extends "base.html" %}
 
-{% block title %}Error{% endblock %}
+{% block css %}
+    <link type="text/css" href="/css/landing.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Error - {% endblock %}
 
 {% block body %}
-    <div id="bigbody">
-        <div id="usererror">
-            {{ message }}<br/><br/>
-            <a href="javascript: history.go(-1)">&larr; Back</a>
+    <div id="container">
+      <center><p style="margin-top:150px;color:red;width:340px;">{{ message }}</p><br/><br/></center>
+      <center><h2 class="form-signin-heading" style="margin-top:-30px;">Register</h2></center>
+      <form role="form" action="/register/" method="post">
+        <div class="form-group">
+          <center><label for="login"></label><input type="text" style="margin-bottom:-24px;width:300px;" placeholder="Username" name="login" class="form-control"></center>
         </div>
+        <div class="form-group">
+          <center><label for="password"></label><input type="password" style="width:300px;" placeholder="Password" id="password" name="password" class="form-control"></center>
+        </div>
+        <center><button type="submit" class="btn btn-primary">Sign up</button></center>
+      </form>
+    </div>
     </div>
 {% endblock %}         

@@ -95,7 +95,7 @@
   position: fixed;
   top: 60px;
   /*right: 100px;*/
-  width: 300px;
+  width: 200px;
   height: 200px;
   background-color: #fff;
   padding: 8px 0;
@@ -121,6 +121,14 @@
     position: absolute;
     font-size: 14px;
     font-color: #bbb;
+    margin-top: 80px;
+    margin-left: 15px;
+  }
+
+  #user-menu-open .playlist-manager {
+    position: absolute;
+    font-size: 14px;
+    font-color: #bbb;
     margin-top: 105px;
     margin-left: 15px;
   }
@@ -143,4 +151,1469 @@
 
 #container {
   margin-top: 80px;
+}
+
+/***********************************
+ ** Player, Modules, Search **
+ ***********************************/
+
+#top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+}
+
+.cleafix {
+    width: 100%;
+    clear: both;
+}
+
+/**
+ * SoundManager 2 + useFlashBlock
+ * ------------------------------
+ * Flash positioning and flashblock / clicktoflash handling
+ */
+
+#sm2-container {
+    /**
+    * where the SM2 flash movie goes. by default, relative container.
+    * set relative or absolute here, and don't touch it later or bad things will happen (see below comments.)
+    */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    /* screw IE 6, just make it display nice */
+    _overflow: hidden;
+}
+
+#sm2-container object,
+#sm2-container embed {
+    /**
+    * the actual SWF movie bit.
+    * important: The SWF needs to be able to be moved off-screen without display: or position: changes.
+    * changing display: or position: or overflow: here or on parent can cause SWF reload or other weird issues after unblock
+    * e.g., SM2 starts but strange errors, no whileplaying() etc.
+    */
+    width: 48px;
+    height: 48px;
+    /* some flash blockers may also respect this rule */
+    max-width: 48px;
+    max-height: 48px;
+}
+
+#sm2-container.swf_timedout {
+    /* expand to show the timed-out SWF content */
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+#sm2-container.swf_timedout,
+#sm2-container.swf_timedout object,
+#sm2-container.swf_timedout embed {
+    /**
+    * when SM2 didn't start normally, time-out case. flash blocked, missing SWF, no flash?
+    * 48px square flash placeholder is typically used by blockers.
+    */
+    min-width: 48px;
+    min-height: 48px;
+}
+
+#sm2-container.swf_unblocked {
+    /* SWF unblocked, or was never blocked to begin with; try to collapse container as much as possible. */
+    width: 1px;
+    height: 1px;
+}
+
+#sm2-container.swf_loaded object,
+#sm2-container.swf_loaded embed,
+#sm2-container.swf_unblocked object,
+#sm2-container.swf_unblocked embed {
+    /* hide flash off-screen (relative to container) when it has loaded OK */
+    left: -9999em;
+    top: -9999em;
+}
+
+#sm2-container.swf_error {
+    /* when there is a fatal error (flash loaded, but SM2 failed) */
+    display: none;
+}
+
+#sm2-container.high_performance,
+#sm2-container.high_performance.swf_timeout {
+    /* "high performance" case: keep on-screen at all times */
+    position: absolute;
+    position: fixed;
+}
+
+#sm2-container.high_performance {
+    overflow: hidden;
+    _top: -9999px; /* IE 6 hax, no position:fixed */
+    _left: -9999px;
+    bottom: 0px;
+    left: 0px;
+    /**
+    * special case: show at first with w/h, hide when unblocked.
+    * might be bad/annoying.
+    * try to stay within ClickToFlash "invisible" limits (so it won't be blocked.)
+    */
+    z-index: 99; /* try to stay on top */
+}
+
+#sm2-container.high_performance.swf_loaded,
+#sm2-container.high_performance.swf_unblocked {
+    z-index: auto;
+}
+
+#sm2-container.high_performance.swf_loaded,
+#sm2-container.high_performance.swf_unblocked,
+#sm2-container.high_performance.swf_unblocked object,
+#sm2-container.high_performance.swf_unblocked embed {
+    /**
+    * 8x8px is required minimum to load in fx/win32 in some cases(?)
+    * 6x6+ good for fast performance, even better when on-screen via position:fixed
+    * also, clickToFlash (Safari <5.1) may auto-load "invisible" SWFs at this size
+    */
+    position: absolute;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: 8px;
+    width: 8px;
+}
+
+#sm2-container.high_performance.swf_loaded {
+    /* stay bottom/left */
+    top: auto;
+    bottom: 0px;
+    left: 0px;
+}
+
+#sm2-container.high_performance.swf_loaded object,
+#sm2-container.high_performance.swf_loaded embed,
+#sm2-container.high_performance.swf_unblocked object,
+#sm2-container.high_performance.swf_unblocked embed {
+    /* high-performance case must stay on-screen */
+    left: auto;
+    top: auto;
+}
+
+#sm2-container.high_performance.swf_timedout {
+    z-index: 99; /* try to stay on top */
+}
+
+.white {
+  color: #EEEEEE;
+}
+
+#top-controls {
+    position: absolute;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+    #top-controls-prev {
+        position: absolute;
+        top: 15px;
+        left: 570px;
+        cursor: pointer;
+        opacity: 1;
+    }
+
+        #top-controls-prev:hover {
+            opacity: 0.8;
+        }
+
+    #top-controls-play {
+        position: absolute;
+        top: 15px;
+        left: 595px;
+        cursor: pointer;
+        opacity: 1;
+    }
+
+        #top-controls-play:hover {
+            opacity: 0.8;
+        }
+
+    #top-controls-next {
+        position: absolute;
+        top: 15px;
+        left: 620px;
+        cursor: pointer;
+        opacity: 1;
+    }
+
+        #top-controls-next:hover {
+            opacity: 0.8;
+        }
+
+    #top-controls-volume {
+        position: absolute;
+        top: 13px;
+        left: 10px;
+        width: 30px;
+        height: 20px;
+    }
+
+        #volume_slider {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            width: 30px;
+            clear: both;
+            height: 10px;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background-color: #FFFFFF;
+            -moz-box-shadow: inset 0 0 1px #222222;
+            -webkit-box-shadow: inset 0 0 1px #222222;
+            box-shadow: inset 0 0 1px #222222;
+        }
+
+            #volume_slider .ui-slider-handle {
+                position: absolute;
+                top: -3px;
+                width: 15px;
+                height: 15px;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+                -moz-box-shadow: inset 0 0 1px #222222;
+                -webkit-box-shadow: inset 0 0 1px #222222;
+                box-shadow: inset 0 0 1px #222222;
+                background-color: #FFFFFF;
+            }
+
+            #volume_slider .ui-slider-handle:active {
+                background-color: #FFFFFF;
+            }
+
+    #top-search-filter {
+        display: block;
+        width: 310px;
+        height: 28px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.428571429;
+        color: #555555;
+        vertical-align: middle;
+        background-color: #ffffff;
+        background-image: none;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        
+
+        /*margin-top: 3px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;*/
+    }
+
+        #top-search-filter:focus {
+            border: 2px solid #0080ff;
+        }
+
+    #top-info {
+        position: absolute;
+        top: 5px;
+        left: 725px;
+        right: 230px;
+        bottom: 5px;
+        border: solid 1px none;
+        border-radius: 3px;
+        -moz-box-shadow: inset 0 0 1px #222222;
+        -webkit-box-shadow: inset 0 0 1px #222222;
+        box-shadow: inset 0 0 1px #222222;
+
+        background: #FFFFFF; /* Old browsers */
+        background: -moz-linear-gradient(top,  #FFFFFF 0%, #FFFFFF 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#FFFFFF)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #FFFFFF 0%,#FFFFFF 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #FFFFFF 0%,#FFFFFF 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #FFFFFF 0%,#FFFFFF 100%); /* IE10+ */
+        background: linear-gradient(top bottom,  #FFFFFF 0%,#FFFFFF 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#FFFFFF',GradientType=0 ); /* IE6-9 */
+    }
+
+        #top-info-nowplaying {
+            cursor: pointer;
+            position: absolute;
+            top: 8px;
+            right: 20px;
+            opacity: 1;
+        }
+
+            #top-info-nowplaying:hover {
+                opacity: 0.8;
+            }
+
+        #top-info-title {
+            position: absolute;
+            top: 2px;
+            left: 30px;
+            right: 30px;
+            font-size: 11px;
+            text-align: center;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #top-info-artist {
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            right: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #555;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #top-info-progress {
+            position: absolute;
+            bottom: 0;
+            left: 55px;
+            right: 55px;
+            height: 15px;
+            font-size: 10px;
+        }
+
+            #top-info-progress-slider {
+                display: none;
+                position: absolute;
+                top: 4px;
+                left: 40px;
+                right: 40px;
+                height: 5px;
+                -moz-border-radius: 5px;
+                border-radius: 5px;
+                background-color: #B6B6B6;
+                box-shadow: 1px 1px 2px #6F6F6F inset;
+            }
+
+                #loading_bar {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 5px;
+                    width: 50%;
+                    -moz-border-radius: 5px;
+                    border-radius: 5px;
+                    z-index: 10;
+                    background-color: #A9A9A9;
+                }
+
+                #top-info-progress-slider .ui-slider-handle {
+                    position: absolute;
+                    top: -3px;
+                    width: 9px;
+                    height: 9px;
+                    border-radius: 10px;
+                    -moz-border-radius: 10px;
+                    border: solid 1px #B3B3B3;
+                    background-color: #FEFEFE;
+                    box-shadow: 1px 1px 1px #B3B3B3;
+                    z-index: 20;
+                }
+
+            #top-info-progress-left_time {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 30px;
+                text-align: right;
+                color: #555;
+            }
+
+            #top-info-progress-right_time {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 30px;
+                color: #555;
+            }
+
+    #top-search {
+        position: absolute;
+    }
+
+        #top-search input {
+            border: solid 1px #EEEEEE;
+            box-shadow: 0 0px 1px #222222 inset;
+            border-radius: 10px;
+            padding: 5px;
+            font-size: 11px;
+            width: 180px;
+        }
+
+    #top-buttons {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        width: 100px;
+        height: 20px;
+    }
+
+        #top-buttons img {
+            float: right;
+            margin: 3px;
+            opacity: 1;
+        }
+
+        #top-buttons img:hover {
+            opacity: 0.8;
+        }
+
+#nowplaying_list {
+    display: none;
+    position: absolute;
+    top: 61px;
+    right: 130px;
+    width: 250px;
+    height: 450px;
+    background-color: #EEEEEE;
+    border: solid 1px #ACACAC;
+    border-radius: 5px;
+    z-index: 200;
+    box-shadow: 1px 1px 10px #ACACAC;
+}
+
+    #nowplaying_list:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -7px;
+        right: 120px;
+        width: 10px;
+        height: 10px;
+        background: #F7F7F7;
+        border-right: 1px solid #ACACAC;
+        border-bottom: 1px solid #ACACAC;
+        -moz-transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
+    #nowplaying_list-header {
+        padding: 5px;
+        color: #CCC;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom: solid 1px #D2D2D2;
+        box-shadow: 1px 1px 2px #D2D2D2;
+
+        background: #F7F7F7; /* Old browsers */
+        background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f6f6f6)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+    }
+
+        #nowplaying_list-header strong {
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        #nowplaying_list-header #shuffle {
+            float: right;
+            width: 16px;
+            height: 16px;
+            background: transparent url("../images/icons/shuffle.png") no-repeat 50% 50%;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        #nowplaying_list-header #shuffle:hover {
+            opacity: 0.8;
+        }
+
+        #nowplaying-clear {
+            float: right;
+            width: 16px;
+            height: 16px;
+            background: transparent url("../images/icons/delete.png") no-repeat 50% 50%;
+            cursor: pointer;
+            opacity: 1;
+        }
+
+        #nowplaying-clear:hover {
+            opacity: 0.9;
+        }
+
+    #nowplaying_list-list {
+        position: absolute;
+        top: 25px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+        #nowplaying_list-list .inactive {
+            opacity: 0.5;
+        }
+
+        .nowplaying_list-item {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            border-bottom: solid 1px #DEDEDE;
+        }
+
+            .nowplaying_list-item .item-buttons {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 20px;
+                display: none;
+            }
+
+                .nowplaying_list-item .item-buttons img {
+                    margin: 17px 6px;
+                    cursor: pointer;
+                }
+
+                .nowplaying_list-item:hover .item-buttons {
+                    display: block;
+                }
+
+            .nowplaying_list-item .item-clickable {
+                position: absolute;
+                top: 5px;
+                left: 25px;
+                width: 220px;
+                height: 40px;
+                cursor: pointer;
+            }
+
+                .nowplaying_list-item .item-img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 40px;
+                    height: 40px;
+                    background-color: #A9A9A9;
+                    background-position: 50% 50%;
+                    background-size: cover;
+                    box-shadow: 1px 1px 3px #929395;
+                }
+
+                .nowplaying_list-item .item-title {
+                    position: absolute;
+                    top: 5px;
+                    left: 45px;
+                    width: 170px;
+                    color: #111;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+
+                .nowplaying_list-item .item-artist {
+                    position: absolute;
+                    top: 20px;
+                    left: 45px;
+                    width: 170px;
+                    color: #828282;
+                    font-size: 11px;
+                    white-space: nowrap;
+                    overflow: hidden;
+                }
+
+.search {
+    padding: 20px;
+    padding-bottom: 10px;
+    clear: both;
+}
+
+    .search h1 {
+        font-size: 22px;
+    }
+
+    .search-query {
+        font-size: 14px;
+        color: #555;
+        padding: 5px;
+        border: solid 1px #BCBCBC;
+        box-shadow: 0 2px 5px #D9D9D9 inset;
+        border-radius: 20px;
+        width: 50%;
+    }
+
+    .search-button {
+        font-size: 14px;
+        position: relative;
+        top: 2px;
+        padding: 5px 15px;
+        border: solid 1px #BCBCBC;
+    }
+
+    .search-params {
+        margin: 5px 10px;
+        color: #555;
+        width: 25%;
+        float: left;
+    }
+
+    .search-links {
+        margin: 5px 10px;
+        width: 23%;
+        float: left;
+        text-align: right;
+    }
+
+        .search-links a {
+            text-decoration: none;
+            border-bottom: dashed 1px #333;
+            margin-left: 20px;
+        }
+
+#artist-info {
+    padding: 0 20px 20px;
+    clear: both;
+    overflow: hidden;
+}
+
+    #artist-info-name {
+        font-size: 20px;
+        padding-bottom: 0;
+    }
+
+        #artist-info-name a {
+            color: #111;
+        }
+
+    #artist-info-subtitle {
+        font-size: 11px;
+        color: #A9A9A9;
+        margin-bottom: 10px;
+    }
+
+    #artist-info-similar {
+        position: absolute;
+        top: 30px;
+        left: 65%;
+        width: 35%;
+        height: 290px;
+        overflow: hidden;
+    }
+
+        .simular-artist {
+            float: left;
+            width: 180px;
+            height: 30px;
+            padding: 10px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+            .simular-artist-img {
+                width: 30px;
+                height: 30px;
+                margin-right: 10px;
+                float: left;
+                background-repeat: no-repeat;
+                background-position: 50% 50%;
+                background-size: cover;
+            }
+
+            .simular-artist-title {
+                float: left;
+                width: 130px;
+                margin-top: 8px;
+                height: 30px;
+                overflow: hidden;
+                color: #444;
+                white-space: nowrap;
+            }
+
+            .simular-artist:hover .simular-artist-title {
+                color: #111;
+            }
+
+.cover-view {
+    width: 100%;
+    clear: both;
+    overflow: hidden;
+}
+
+    .cover {
+        display: block;
+        float: left;
+        width: 200px;
+        height: 240px;
+        margin: 20px 10px 0 20px;
+        cursor: pointer;
+    }
+
+        .cover-image {
+            width: 200px;
+            height: 200px;
+            background: #EEE;
+            box-shadow: 1px 1px 7px #9D9489;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .cover:hover .cover-image {
+            box-shadow: 1px 1px 10px #9D9489;
+        }
+
+        .cover-title {
+            padding: 7px 0;
+        }
+
+            .cover-title span {
+                font-weight: bold;
+            }
+
+            .cover-title small {
+                color: #A9A9A9;
+                font-size: 11px;
+            }
+
+
+#cover-info {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    height: 300px;
+    clear: both;
+    border-top: solid 1px #CFCFCF;
+    box-shadow: 1px 1px 3px #CFCFCF inset;
+    background-color: #E8E8E8;
+    margin-bottom: 30px;
+}
+
+    #cover-info-arrow {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -10px;
+        left: 100px;
+        width: 20px;
+        height: 20px;
+        background-color: #E8E8E8;
+        border-right: 1px solid #CFCFCF;
+        border-bottom: 1px solid #CFCFCF;
+        -moz-transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
+    #cover-info-bgcover {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        height: 300px;
+        background: 50% 50%;
+        background-size: cover;
+        opacity: 0.2;
+        -webkit-filter: grayscale(100%);
+    }
+
+    #cover-info-inside {
+        margin: 20px;
+    }
+
+    #cover-info-title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    #cover-info-artist {
+        color: #555;
+    }
+
+    #cover-info-tracks {
+        margin-top: 5px;
+        margin-right: 300px;
+        height: 210px;
+        min-width: 570px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+        #cover-info-tracks .track {
+            width: 250px;
+            float: left;
+        }
+
+    #cover-info-lists {
+        position: absolute;
+        top: 40px;
+        left: 340px;
+        overflow: hidden;
+    }
+
+        .cover-info-list {
+            width: 200px;
+            height: 250px;
+            margin-right: 20px;
+            float: left;
+        }
+
+            .cover-info-list h1 {
+                font-size: 14px;
+                color: #626262;
+            }
+
+            .cover-info-list .items {
+                width: 100%;
+                height: 220px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                border: solid 1px #EEE;
+            }
+
+.list-view {
+    width: 100%;
+    clear: both;
+}
+
+    .playing {
+        background: #f6f6f6; /* Old browsers */
+        background: -moz-linear-gradient(top,  #f6f6f6 0%, #eaeaea 50%, #ededed 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f6f6), color-stop(50%,#eaeaea), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #f6f6f6 0%,#eaeaea 50%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #f6f6f6 0%,#eaeaea 50%,#ededed 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #f6f6f6 0%,#eaeaea 50%,#ededed 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #f6f6f6 0%,#eaeaea 50%,#ededed 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f6f6', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    }
+
+    .track {
+        position: relative;
+        width: 500px;
+        height: 30px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+        .track-edit {
+            position: absolute;
+            top: 13px;
+            left: 0;
+            width: 30px;
+            height: 16px;
+        }
+
+            .track-edit input {
+                opacity: 0;
+            }
+
+            .track:hover .track-edit input {
+                opacity: 0.6;
+            }
+
+            .track-edit input:checked {
+                opacity: 1;
+            }
+
+        .track-play {
+            position: absolute;
+            top: 13px;
+            left: 15px;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            background: url('../images/icons/play_small.png') no-repeat 50% 50%;
+        }
+
+        .track-title {
+            position: absolute;
+            top: 12px;
+            left: 35px;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 50%;
+            overflow: hidden;
+            color: #090909;
+        }
+
+        .track-artist {
+            position: absolute;
+            top: 30px;
+            left: 35px;
+            font-size: 11px;
+            color: #A9A9A9;
+            cursor: pointer;
+            white-space: nowrap;
+            width: 60%;
+            overflow: hidden;
+        }
+
+        .track-options {
+            position: absolute;
+            top: 13px;
+            right: 20px;
+            overflow: hidden;
+            text-align: right;
+        }
+
+        .track-delete {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            background: url('../images/icons/small/black/trash_icon&16.png') no-repeat 50% 50%;
+            opacity: 0.5;
+            margin-right: 10px;
+        }
+
+            .track-delete:hover {
+                opacity: 0.9;
+            }
+
+
+.big-album-view {
+    width: 100%;
+    clear: both;
+}
+
+    .big-album-view-item {
+        position: relative;
+        display: block;
+        width: 100%;
+        clear: both;
+        min-height: 120px;
+        margin: 10px 0 20px 20px;
+        overflow: hidden;
+    }
+
+        .big-album-view-item .item-cover {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            background-position: 50% 50%;
+            background-size: cover;
+            border: solid 1px #CCC;
+            box-shadow: 1px 1px 3px #CCC;
+        }
+
+        .big-album-view-item .item-title {
+            position: absolute;
+            top: 20px;
+            left: 130px;
+            font-size: 17px;
+            color: #444;
+            cursor: pointer;
+            border-bottom: dashed 1px #777;
+        }
+
+            .big-album-view-item .item-title:hover {
+                color: #000;
+            }
+
+        .big-album-view-item .item-artist {
+            position: absolute;
+            top: 45px;
+            left: 130px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .big-album-view-item .item-list {
+            margin-top: 70px;
+            margin-left: 120px;
+            width: 75%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+            .item-list .track {
+                width: 250px;
+                float: left;
+            }
+
+.tag-cloud-view {
+    position: absolute;
+    top: 60px;
+    margin: 100px;
+    text-align: center;
+    clear: both;
+}
+
+    .tag-cloud-view .tag {
+        color: #555;
+        line-height: 1.5em;
+        margin-right: 20px;
+        border-bottom: dashed 1px #999;
+        cursor: pointer;
+    }
+
+    .tag-cloud-view .tag:hover {
+        color: #222;
+    }
+
+        .tag-cloud-view .tag-10 {
+            font-size: 40px;
+        }
+
+        .tag-cloud-view .tag-9 {
+            font-size: 40px;
+        }
+
+        .tag-cloud-view .tag-8 {
+            font-size: 38px;
+        }
+
+        .tag-cloud-view .tag-7 {
+            font-size: 35px;
+        }
+
+        .tag-cloud-view .tag-6 {
+            font-size: 30px;
+        }
+
+        .tag-cloud-view .tag-5 {
+            font-size: 25px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag-4 {
+            font-size: 23px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag-3 {
+            font-size: 19px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag-2 {
+            font-size: 14px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag-1 {
+            font-size: 13px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag-0 {
+            font-size: 12px;
+            line-height: 2.5em;
+        }
+
+        .tag-cloud-view .tag sup {
+            color: #999;
+            font-size: 10px;
+            position: relative;
+            top: -1em;
+            left: 3px;
+        }
+
+.sidebar_view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background-color: #eeeeee;
+    border-right: solid 1px #A6A6A6;
+    box-shadow: -1px 0 5px #AAAAAA inset;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+    .sidebar_view-item {
+        width: 100%;
+        position: relative;
+        height: 50px;
+    }
+
+    .sidebar_view-img {
+        margin: 10px;
+        width: 35px;
+        height: 30px;
+        float: left;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+    }
+
+    .sidebar_view-title {
+        float: left;
+        width: 130px;
+        font-weight: bold;
+        margin-top: 12px;
+        cursor: pointer;
+        font-size: 14px;
+        opacity: 0.8;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+        .sidebar_view-item:hover .sidebar_view-title {
+            opacity: 1;
+        }
+
+    .sidebar_view-subtitle {
+        float: left;
+        width: 140px;
+        font-size: 10px;
+        color: #555;
+    }
+
+    .sidebar_view-buttons {
+        display: none;
+        position: absolute;
+        top: 19px;
+        right: 10px;
+        width: 35px;
+        height: 15px;
+        cursor: pointer;
+        text-align: right;
+        font-size: 10px;
+        color: #555;
+    }
+
+        .sidebar_view-item:hover .sidebar_view-buttons {
+            display: block;
+        }
+
+.with_sidebar_view {
+    position: absolute;
+    top: 0;
+    left: 250px;
+    right: 0;
+    bottom: 0;
+}
+
+    .with_sidebar_view > h1 {
+        font-size: 24px;
+        margin: 20px;
+        margin-bottom: 5px;
+        padding-bottom: 0;
+        color: #888;
+    }
+
+    .with_sidebar_view .scroll_panel {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+.list_loader {
+    width: 100%;
+    height: 250px;
+    opacity: 0.6;
+    background: url(../images/loaders/big.gif) no-repeat 50% 50%;
+}
+
+.tabs {
+    display: none;
+}
+
+#tab-user {
+    display: block;
+}
+
+.columns {
+    margin: 20px 40px;
+    clear: both;
+    overflow: hidden;
+}
+
+    .column-50 {
+        width: 50%;
+        float: left;
+    }
+
+    .columns h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+.header_small {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: normal;
+    font-size: 11px;
+    position: relative;
+    top: -2px;
+    cursor: pointer;
+    color: #777;
+}
+
+    .header_small:hover {
+        color: #555;
+    }
+
+
+.list-buttons {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+    position: relative;
+    top: -2px;
+    white-space: nowrap;
+}
+
+    .list-remove-button,
+    .list-addto-button,
+    .list-selectall-button {
+        display: inline-block;
+        float: left;
+        font-size: 11px;
+        font-weight: normal;
+        padding: 2px 7px;
+        cursor: pointer;
+        margin: 3px 0;
+        color: #999;
+        text-shadow: 1px 1px 1px #FFF;
+        position: relative;
+    }
+
+    .list-buttons span.active {
+        background-color: #E4E4E4;
+        border: solid 1px #C5C5C3;
+        border-radius: 10px;
+        box-shadow: 1px 1px 2px #C5C5C3 inset;
+    }
+
+    .list-buttons .activator {
+        display: inline-block;
+        float: left;
+        padding: 2px 7px;
+        cursor: pointer;
+        margin: 3px 0;
+        width: 17px;
+        height: 10px;
+        background: transparent url('../images/icons/edit_list.png') no-repeat 50% 50%;
+    }
+
+    .list-buttons-onactive {
+        float: left;
+        display: none;
+    }
+
+    .list-buttons span:hover {
+        color: #555;
+    }
+
+
+.add_to_popup {
+    display: none;
+    position: absolute;
+    top: 30px;
+    left: -20px;
+    width: 160px;
+    height: 180px;
+    background-color: #F7F7F7;
+    border: solid 1px #ACACAC;
+    border-radius: 5px;
+    z-index: 500;
+    box-shadow: 1px 1px 10px #ACACAC;
+}
+
+    .add_to_popup:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -7px;
+        right: 80px;
+        width: 10px;
+        height: 10px;
+        background: #F7F7F7;
+        border-right: 1px solid #ACACAC;
+        border-bottom: 1px solid #ACACAC;
+        -moz-transform: rotate(-135deg);
+        -webkit-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);
+        transform: rotate(-135deg);
+    }
+
+    .add_to_popup-list {
+        position: absolute;
+        top: 5px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+        .add_to_popup .add_to_block {
+            display: block;
+            padding: 40px 20px;
+            font-size: 12px;
+            white-space: normal;
+            text-align: center;
+            color: #333;
+        }
+
+        .add_to_popup .add_to_block:hover {
+            color: #333;
+        }
+
+        .add_to_popup .add_to_button {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            text-align: center;
+            padding: 5px 0;
+            cursor: pointer;
+            border-bottom: solid 1px #DEDEDE;
+            opacity: 0.8;
+
+            background: #F7F7F7; /* Old browsers */
+            background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f6f6f6)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 ); /* IE6-9 */
+        }
+
+        .add_to_popup .add_to_button:hover {
+            opacity: 1;
+        }
+
+/* User */
+.search_saved-delete {
+    margin-left: 10px;
+}
+
+#user-recommended {
+    position: absolute;
+    top: 30px;
+    left: 65%;
+    width: 250px;
+    height: 280px;
+}
+
+    #user-recommended h1 {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+#user-lists {
+    clear: both;
+    overflow: hidden;
+}
+
+    .user-list {
+        width: 250px;
+        margin: 20px 40px;
+        float: left;
+    }
+
+        .user-list h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-list-list {
+            width: 250px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+            .user-list-list ol {
+                list-style-type: decimal-leading-zero;
+                padding-left: 30px;
+            }
+
+            .user-list-list .item {
+                padding: 10px;
+                cursor: pointer;
+                opacity: 0.8;
+            }
+
+            .user-list-list .item:hover {
+                opacity: 1;
+            }
+
+                .user-list-list .item span {
+                    font-weight: bold;
+                }
+
+                .user-list-list .item small {
+                    font-size: 11px;
+                    color: #A9A9A9;
+                }
+
+/* Music */
+
+#music-tracks {
+    padding: 0 20px;
+}
+
+    #music-tracks .track {
+        width: 55%;
+    }
+
+#listening_history .track, #vk_audio .track {
+    width: 90%;
+}
+
+#vk_need_login {
+    padding: 20px 0;
+    display: none;
+}
+
+/* Artist */
+
+#cover-info-buttons {
+}
+
+/* Playlist */
+
+#playlist_tracks {
+    left: 10px;
+}
+
+    #playlist_tracks .track {
+        width: 100%;
+    }
+
+.sidebar_view-add {
+    position: relative;
+    margin: 10px 0 0 15px;
+    cursor: pointer;
+}
+
+    .sidebar_view-add img {
+        margin: 5px;
+    }
+
+    .sidebar_view-add span {
+        font-size: 11px;
+    }
+
+    .sidebar_view-add input {
+        display: none;
+    }
+
+#playlist_buttons {
+    margin-left: 18px;
 }

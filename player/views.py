@@ -44,7 +44,7 @@ def register(request):
         password = request.POST['password']
 
         if not username or not password:
-            return render_to_response("user/error.html", {"message": u"Login or password is empty"})
+            return render_to_response("user/error.html", {"message": u"Complete the forms entirely. All two of them."})
 
         try:
             user = User.objects.create_user(username, u"%s@none.ru" % username, password)
@@ -55,7 +55,7 @@ def register(request):
             profile.save()
             auth.login(request, auth.authenticate(username=username, password=password))
         except:
-            return render_to_response("user/error.html", {"message": u"User with the same name already exists"})
+            return render_to_response("user/error.html", {"message": u"Username is already taken. You're not that special."})
 
         return redirect("/")
     else:
@@ -71,7 +71,7 @@ def login(request):
             auth.login(request, user)
             return redirect(request.GET.get("next", "/"))
         else:
-            return render_to_response("user/error.html", {"message": u"The password is incorrect or there is no such user"})
+            return render_to_response("user/error.html", {"message": u"You've entered an incorrect username or password. If you haven't registered, sign up below."})
     return HttpResponsePermanentRedirect("/")
 
 

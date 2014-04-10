@@ -16,6 +16,7 @@
     <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
     <!-- Bootstrap core CSS -->
     <link type="text/css" href="/css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="/css/hiplyst.css" rel="stylesheet">
     {% block css %}
     {% endblock %}
 
@@ -44,11 +45,7 @@
   <body>
     <div class="navbar-wrapper">
       <div class="container">
-        {% if user.is_authenticated %}
         <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-        {% else %}
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
-        {% endif %}
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -57,24 +54,23 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a id="brand" class="navbar-brand" href="/" style="color:#ccc; text-decoration:none;">hip<font face="cursive" style="color:#f90;font-size:28px;">lyst</font></a>
+              <a id="brand" class="navbar-brand" href="#" style="color:#ccc; text-decoration:none;">hip<font face="cursive" style="color:#f90;font-size:28px;">lyst</font></a>
             </div>
             <div class="navbar-collapse collapse">
-            {% if user.is_authenticated %}
               <form class="navbar-form navbar-left">
-                  <input type="text" name="query" id="top-search-filter" placeholder="Search for songs, artists, and more." style="margin-top:3px;padding-left:8px;"/>
+                  <input type="text" name="query" id="top-search-filter" placeholder="Search for songs, artists, and more." style="margin-top:2px;padding-left:4px;"/>
               </form>
               <ul class="nav navbar-nav">
-                <li><a href="#make-playlist" onclick="gui.activateTab('music');"><!--<span class="glyphicon glyphicon-edit"></span>--> Create Playlist</a></li>
+                <li><a href="#make-playlist"><span class="glyphicon glyphicon-edit"></span> Create Playlist</a></li>
               </ul>
 
-              <div id="top-controls">
+            <div id="top-controls">
                 <div id="top-controls-prev"><span class="glyphicon glyphicon-step-backward white"></span></div>
                 <div id="top-controls-play"><span class="glyphicon glyphicon-play white"></div>
                 <div id="top-controls-next"><span class="glyphicon glyphicon-step-forward white"></span></div>
-              </div>
+            </div>
 
-              <div id="top-info">
+            <div id="top-info">
                 <div id="top-info-title"></div>
                 <div id="top-info-artist"></div>
 
@@ -113,52 +109,61 @@
             </div>
             <div id="nowplaying_list-list"></div>
         </div>
-
-        <div id="user-menu">
-          <p class="navbar-text navbar-right">Signed in as <a href="#" id="user-menu-trigger" onclick="toggle_visibility('user-menu-open', 'user-menu');" class="navbar-link">{{user.username}}</a></p>
-        </div>
-        <div id="user-menu-open">
-          <div class="header">Hey, {{ user.username }}!</div>     
-          <div class="view-my-profile menu-link" onclick="gui.activateTab('user');"><span class="glyphicon glyphicon-user"></span><a href="/#user" style="none"> View my profile</a></div>
-          <div class="playlist-manager menu-link" onclick="gui.activateTab('playlists');"><span class="glyphicon glyphicon-music"></span> Playlist manager</div>
-          <div class="user-settings menu-link"><span class="glyphicon glyphicon-cog"></span> Settings</div>
-          <div class="logout menu-link"><span class="glyphicon glyphicon-log-out"></span> Not you? <a href="/logout/">Logout</a></div>
-        </div>
-        {% else %}
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <form class="navbar-form navbar-right" role="form" action="/login/" method="post">
-              <div class="navbar-login">
-                <div class="form-group">
-                  <input type="text" placeholder="Username" id="login" name="login" class="form-control">
-                </div>
-                <div class="form-group">
-                  <input type="password" placeholder="Password" id="password" name="password" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
-              </form>
-            </div>
-            </div>
-            {% endif %}
+              
+              <div id="user-menu">
+                <p class="navbar-text navbar-right">Signed in as <a href="#" id="user-menu-trigger" onclick="toggle_visibility('user-menu-open', 'user-menu');" class="navbar-link">{{user.username}}</a></p>
+              </div>
           </div>
         </div>
-
       </div>
+    </div>
+
+    <div id="current-playlist">
+    </div>
+    <div id="user-menu-open">
+      <div class="header">Hey, {{ user.username }}!</div>     
+      <div class="view-my-profile menu-link"><span class="glyphicon glyphicon-user"></span> <a href="/#user" style="none">View my profile</a></div>
+      <div class="user-settings menu-link"><span class="glyphicon glyphicon-cog"></span> Settings</div>
+      <div class="logout menu-link"><span class="glyphicon glyphicon-log-out"></span> Not you? <a href="/logout/">Logout</a></div>
+    </div>
+
+    <div id="big-container">
+        
+        <div id="container">
+            <div id="mode-list">
+                <div class="mode-list-item">Home</div>
+                <div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>
+                <div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>
+                <div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>
+                <div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');">Artists</div>
+            </div>
+
+            <div id="content-frame">
+                <div id="tab-user" class="tab" style="display: none;">
+                    {% include "modules/user.html" %}
+                </div>
+
+                <div id="tab-playlists" class="tab" style="display: none;">
+                    {% include "modules/playlists.html" %}
+                </div>
+
+                <div id="tab-music" class="tab" style="display: none;">
+                    {% include "modules/music.html" %}
+                </div>
+
+                <div id="tab-artist" class="tab" style="display: none;">
+                    {% include "modules/artist.html" %}
+                </div>
+
+            </div>
+        </div>
+
+        <div id="vk_api_transport" style="display: none;"></div>
+
+        <div style="display: none;">
+            <div id="access_token">{{ACCESS_TOKEN}}</div>
+        </div>
+
     </div>
 
     {% block body %}
@@ -182,6 +187,67 @@
       });
     </script>
     {% block extra-js %}
+        <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
+        <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
+		<script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
+    	<script type="text/javascript" src="/js/frameworks/mustache.js"></script>
+
+        <!-- Main -->
+        <script type="text/javascript" src="/js/main.js?v=3.0.9"></script>
+
+        <!-- Filters -->
+        <script type="text/javascript" src="/js/classes/Filters.js?v=3.0.9"></script>
+
+        <!-- Tracks -->
+        <script type="text/javascript" src="/js/classes/Tracks/Track.js?v=3.0.9"></script>
+
+        <!-- Info -->
+        <script type="text/javascript" src="/js/classes/Info/AbstractInfo.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Info/LastFmInfo.js?v=3.0.9"></script>
+
+        <!-- Lists -->
+        <script type="text/javascript" src="/js/classes/Lists/AbstractList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/LoveList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/MyAudioList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/NowPlayingList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RecentList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RecommendList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/SearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/ArtistSearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/MusicSearchList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/UserPlayList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/AlbumList.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Lists/RadioList.js?v=3.0.9"></script>
+
+        <!-- Scrobblers -->
+        <script type="text/javascript" src="/js/classes/Scrobblers/LastFmScrobbler.js?v=3.0.9"></script>
+
+        <!-- Search engines -->
+        <script type="text/javascript" src="/js/classes/Search/AbstractSearchEngine.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Search/VKSearchEngine.js?v=3.0.9"></script>
+
+
+        <!-- Controllers -->
+        <script type="text/javascript" src="/js/classes/CoversController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/ListController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/PlaybackController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/ScrobblerController.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/SearchController.js?v=3.0.9"></script>
+
+        <!-- Main -->
+        <script type="text/javascript" src="/js/classes/Gui/UserGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/MusicGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/ArtistGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/AlbumsGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/PlaylistsGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui/RecommendationsGui.js?v=3.0.9"></script>
+
+        <script type="text/javascript" src="/js/classes/Gui/ListGui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Gui.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Player.js?v=3.0.9"></script>
+
+        <script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>
     {% endblock %}
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">

@@ -1,15 +1,13 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
-/* Padding below the footer and lighter body text */
+/* Padding below the footer and lighter body text
 
 body {
   padding-bottom: 40px;
   color: #5a5a5a;
 }
 
-
-
-/* CUSTOMIZE THE NAVBAR
+  CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
 /* Special class on .container surrounding .navbar, used for positioning it into place. */

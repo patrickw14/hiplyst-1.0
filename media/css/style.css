@@ -1,95 +1,3 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent;
-    color: #000;
-}
-ol, ul {
-    list-style: none;
-}
-blockquote, q {
-    quotes: none;
-}
-:focus {
-    outline: 0;
-}
-ins {
-    text-decoration: none;
-}
-del {
-    text-decoration: line-through;
-}
-
-input {
-    background-color: #FFF;
-    color: #000;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
-header, nav, section, article, aside, footer {
-    display: block;
-}
-
-a {
-    color: #333;
-    outline: none;
-    text-decoration: underline;
-}
-
-a:hover {
-    text-decoration: none;
-}
-
-p {
-    text-indent: 20px;
-    margin: 0 0 18px;
-    font-size: 14px;
-}
-
-h1 {
-    font-size: 16px;
-    padding-bottom: 10px;
-}
-
-img {
-    border: none;
-    vertical-align: middle;
-}
-input {
-    vertical-align: middle;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    overflow: hidden;
-    height: 100%;
-    max-height: 100%;
-    background-color: #FFF;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    font-size: 12px;
-    text-shadow: 1px 1px 1px #FFF;
-}
-
-/* styles */
-
 #big-container {
     position: absolute;
     top: 0;
@@ -105,15 +13,6 @@ body {
     left: 0;
     right: 0;
     height: 60px;
-}
-
-#container {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: 10px;
-    background-color: #FFF;
 }
 
 #bottom {
@@ -132,24 +31,6 @@ body {
     background: linear-gradient(to bottom,  #EEEEEE 0%,#EEEEEE 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#EEEEEE',GradientType=0 ); /* IE6-9 */
 
-}
-
-button {
-    border: solid 1px #D1D1D1;
-    border-radius: 3px;
-    cursor: pointer;
-    background: #fcfcfc; /* Old browsers */
-    background: -moz-linear-gradient(top,  #fcfcfc 0%, #e5e5e5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfcfc), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #fcfcfc 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #fcfcfc 0%,#e5e5e5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #fcfcfc 0%,#e5e5e5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #fcfcfc 0%,#e5e5e5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-}
-
-button:active {
-    box-shadow: 1px 1px 5px #D1D1D1 inset;
 }
 
 .cleafix {

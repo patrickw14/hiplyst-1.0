@@ -1,18 +1,11 @@
 {% extends "base.html" %}
 
-{% block css%}
+{% block css %}
     <link type="text/css" href="/css/hiplyst.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-		<div id="container">
-            <div id="mode-list">
-                <div class="mode-list-item">Home</div>
-                <div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>
-                <div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>
-                <div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>
-                <div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');">Artists</div>
-            </div>
+        <div id="container">
 
             <div id="content-frame">
                 <div id="tab-user" class="tab" style="display: none;">
@@ -31,13 +24,18 @@
                     {% include "modules/artist.html" %}
                 </div>
 
+                <!--<div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>-->
+                <!--<div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>-->
+                <!--<div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>-->
+                <!--<div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');"> Artists</div>-->
+
             </div>
         </div>
 
         <div id="vk_api_transport" style="display: none;"></div>
 
-        <div>
-            <div id="access_token" style="display: none;">{{ACCESS_TOKEN}}</div>
+        <div style="display: none;">
+            <div id="access_token">{{ACCESS_TOKEN}}</div>
         </div>
 {% endblock %}
 
@@ -45,7 +43,7 @@
 {% endblock %}
 
 {% block extra-js %}
-		<script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
+        <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
         <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
 		<script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
