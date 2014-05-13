@@ -45,7 +45,7 @@
     <div class="navbar-wrapper">
       <div class="container">
         {% if user.is_authenticated %}
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
         {% else %}
         <div class="navbar navbar-default navbar-static-top" role="navigation">
         {% endif %}
@@ -61,12 +61,11 @@
             </div>
             <div class="navbar-collapse collapse">
             {% if user.is_authenticated %}
-              <form class="navbar-form navbar-left">
-                  <input type="text" name="query" id="top-search-filter" placeholder="Search for songs, artists, and more." style="margin-top:3px;padding-left:8px;"/>
-              </form>
               <ul class="nav navbar-nav">
-                <li><a href="#make-playlist" onclick="gui.activateTab('music');"><!--<span class="glyphicon glyphicon-edit"></span>--> Create Playlist</a></li>
-              </ul>
+                <form class="navbar-form navbar-left">
+                  <input type="text" name="query" id="top-search-filter" placeholder="Search for songs, artists, and more." style="margin-top:3px;padding-left:8px;"/>
+                </form>
+                <li><a onclick="gui.activateTab('playlists');" style="cursor:pointer;">Create Playlist</a></li>
 
               <div id="top-controls">
                 <div id="top-controls-prev"><span class="glyphicon glyphicon-step-backward white"></span></div>
@@ -92,7 +91,7 @@
                 <div id="top-controls">
                   <div id="top-controls-volume">
                     <div id="volume_slider">
-                        <div style="position: relative; width: 20px;">
+                        <div style="position: relative; width: 30px;">
                             <div class="ui-slider-handle"></div>
                         </div>
                     </div>
@@ -102,29 +101,29 @@
                 <div id="top-info-nowplaying" onclick="$('#nowplaying_list').toggle(); event.preventDefault();">
                     <img src="/images/icons/small/black/list_num_icon&16.png" alt="!" />
                 </div>
+              </div>
+              </ul>
 
-            </div>
+              <div id="nowplaying_list">
+                <div id="nowplaying_list-header">
+                  <strong>Now playing</strong>
+                  <div id="nowplaying-clear" title="Clean"></div>
+                  <div id="shuffle" title="Mix"></div>
+                </div>
+                <div id="nowplaying_list-list"></div>
+              </div>
 
-        <div id="nowplaying_list">
-            <div id="nowplaying_list-header">
-                <strong>Now playing</strong>
-                <div id="nowplaying-clear" title="Clean"></div>
-                <div id="shuffle" title="Mix"></div>
-            </div>
-            <div id="nowplaying_list-list"></div>
-        </div>
-
-        <div id="user-menu">
-          <p class="navbar-text navbar-right">Signed in as <a href="#" id="user-menu-trigger" onclick="toggle_visibility('user-menu-open', 'user-menu');" class="navbar-link">{{user.username}}</a></p>
-        </div>
-        <div id="user-menu-open">
-          <div class="header">Hey, {{ user.username }}!</div>     
-          <div class="view-my-profile menu-link" onclick="gui.activateTab('user');"><span class="glyphicon glyphicon-user"></span><a href="/#user" style="none"> View my profile</a></div>
-          <div class="playlist-manager menu-link" onclick="gui.activateTab('playlists');"><span class="glyphicon glyphicon-music"></span> Playlist manager</div>
-          <div class="user-settings menu-link"><span class="glyphicon glyphicon-cog"></span> Settings</div>
-          <div class="logout menu-link"><span class="glyphicon glyphicon-log-out"></span> Not you? <a href="/logout/">Logout</a></div>
-        </div>
-        {% else %}
+              <div id="user-menu">
+                <p class="navbar-text pull-right" style="padding-right:20px;"> | <a href="#" id="user-menu-trigger" onclick="toggle_visibility('user-menu-open', 'user-menu');" class="navbar-link">{{user.username}}</a></p>
+              </div>
+              <div id="user-menu-open">
+                <div class="header">Hey, {{ user.username }}!</div>     
+                <div class="view-my-profile menu-link" onclick="gui.activateTab('user');"><span class="glyphicon glyphicon-user"></span><a href="/#user" style="none"> View my profile</a></div>
+                <div class="playlist-manager menu-link" onclick="gui.activateTab('music');" style="cursor:pointer;"><span class="glyphicon glyphicon-music"></span> Just want to listen?</div>
+                <div class="user-settings menu-link"><span class="glyphicon glyphicon-cog"></span> Settings</div>
+                <div class="logout menu-link"><span class="glyphicon glyphicon-log-out"></span> Not you? <a href="/logout/">Logout</a></div>
+              </div>
+            {% else %}
               <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -148,7 +147,7 @@
                   <input type="text" placeholder="Username" id="login" name="login" class="form-control">
                 </div>
                 <div class="form-group">
-                  <input type="password" placeholder="Password" id="password" name="password" class="form-control">
+                  <input type="password" placeholder="Password" id="password" name="password" class="form-control" style="padding-left:12px;padding-top:0;padding-bottom:0;">
                 </div>
                 <button type="submit" class="btn btn-primary">Sign in</button>
               </form>
@@ -157,7 +156,6 @@
             {% endif %}
           </div>
         </div>
-
       </div>
     </div>
 
@@ -171,16 +169,6 @@
     {% endblock %}
     </div><!-- /.container -->
 
-    <script type="text/javascript">
-      $('.quicksearch').typeahead({                                
-        name: 'quicksearch',                                                          
-        local: [
-          "The xx",
-          "The Ramones",
-          "The Clash"
-        ]                                                                   
-      });
-    </script>
     {% block extra-js %}
     {% endblock %}
     <!-- Yandex.Metrika counter -->
@@ -215,19 +203,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/frameworks/typeahead.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.quicksearch .typeahead').typeahead({
-                name: 'quicksearch',
-                local: [
-                    "The xx",
-                    "The Ramones",
-                    "The Beatles",
-                    "The The"
-                ]
-            });
-        });
-    </script>
     <script type="text/javascript">
     //toggle visibility of user menu when username is clicked in menu bar
     function toggle_visibility(elementId, selectorId) {

@@ -156,12 +156,3 @@ document.getElementsBySelector = function(selector) {
   return currentContext;
 }
 
-/* That revolting regular expression explained 
-/^(\w+)\[(\w+)([=~\|\^\$\*]?)=?"?([^\]"]*)"?\]$/
-  \---/  \---/\-------------/    \-------/
-    |      |         |               |
-    |      |         |           The value
-    |      |    ~,|,^,$,* or =
-    |   Attribute 
-   Tag
-*/

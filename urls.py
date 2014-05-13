@@ -13,36 +13,19 @@ urlpatterns = patterns(
     # url(r'^Player/', include('Player.foo.urls')),
 
     (r'^$', 'player.views.full'),
-    (r'^small/$', 'player.views.small'),
-    (r'small/track/(?P<track_id>.*)/', 'player.views.small_redirect'),
     (r'^register/$', 'player.views.register'),
     (r'^login/$', 'player.views.login'),
     (r'^logout/$', 'player.views.logout'),
-#    (r'^migrate/$', 'player.views.migrate'),
-
-    (r'^nowlistening$', 'other.views.get_listening_history'),
-    (r'^ajax/nowlistening$', 'other.views.get_listening_history'),
-    (r'^ajax/add_to_nowlistening$', 'other.views.add_to_listening_history'),
 
     (r'^ajax/report_bad_token/$', 'player.views.bad_token'),
-
     (r'^ajax/playlist/', include('playlists.urls')),
-    (r'^ajax/searches/', include('searches.urls')),
-    (r'^ajax/love/', include('love.urls')),
-    (r'^ajax/searchhistory/add/', 'other.views.add_to_searches_history'),
-    (r'^ajax/searchhistory/list', 'other.views.get_searches_history'),
 
-    (r'^lastfm/', include('lastfm.urls')),
-    (r'^listen/', include('artistpages.urls')),
-    (r'^radio/', include('radio.urls')),
     (r'^add_token', 'player.views.add_token'),
 
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
 
-# если у нас тест-сервер, сделаем вот так, на боевом nginx,
-# конечно же, все делается через location
 if settings.DEBUG:
     urlpatterns += patterns(
         '',

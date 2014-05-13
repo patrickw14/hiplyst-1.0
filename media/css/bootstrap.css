@@ -269,7 +269,22 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #ffffff;
+  background: white;
+  /*background-image: url("/images/bg-lion-background.jpg");*/
+}
+body.home {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-image: url("/images/bg-lion.jpg");
+}
+body.playlists {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333333;
+  background-image: url("/images/bg-lion-warm.jpg");
 }
 input,
 button,

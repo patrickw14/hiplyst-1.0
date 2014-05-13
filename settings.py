@@ -94,13 +94,13 @@ SECRET_KEY = '95!c2=sq4ofja%!nycnz9zkqnbbzfv3km%2tw)bs=rg9g$t2sr'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    #'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
@@ -125,15 +125,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    # 'south',
-    'lastfm',
-    'love',
-    'other',
     'player',
     'playlists',
-    'radio',
-    'searches',
-    'artistpages',
 )
 
 # A sample logging configuration. The only tangible logging

@@ -1,42 +1,41 @@
 {% extends "base.html" %}
 
 {% block css %}
-    <link type="text/css" href="/css/hiplyst.css" rel="stylesheet">
+  <link type="text/css" href="/css/landing.css" rel="stylesheet">
+  <link type="text/css" href="/css/hiplyst.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-        <div id="container">
+  <div class="container">
+  <body class="home">
+    <div id="tab-user" class="tab" style="display: none;">
+      {% include "modules/user.html" %}
+    </div>
+  </body>
 
-            <div id="content-frame">
-                <div id="tab-user" class="tab" style="display: none;">
-                    {% include "modules/user.html" %}
-                </div>
+    <div id="tab-playlists" class="tab" style="display: none;">
+      {% include "modules/playlists.html" %}
+    </div>
 
-                <div id="tab-playlists" class="tab" style="display: none;">
-                    {% include "modules/playlists.html" %}
-                </div>
+    <div id="tab-music" class="tab" style="display: none;">
+      {% include "modules/music.html" %}
+    </div>
 
-                <div id="tab-music" class="tab" style="display: none;">
-                    {% include "modules/music.html" %}
-                </div>
+    <div id="tab-artist" class="tab" style="display: none;">
+      {% include "modules/artist.html" %}
+    </div>
 
-                <div id="tab-artist" class="tab" style="display: none;">
-                    {% include "modules/artist.html" %}
-                </div>
+    <!--<div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>-->
+    <!--<div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>-->
+    <!--<div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>-->
+    <!--<div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');"> Artists</div>-->
 
-                <!--<div class="mode-list-item active" id="tab-title-user" onclick="gui.activateTab('user');">{{ user.username }}'s Profile</div>-->
-                <!--<div class="mode-list-item" id="tab-title-playlists" onclick="gui.activateTab('playlists');">Playlists</div>-->
-                <!--<div class="mode-list-item" id="tab-title-music" onclick="gui.activateTab('music');">Music</div>-->
-                <!--<div class="mode-list-item" id="tab-title-artist" onclick="gui.activateTab('artist');"> Artists</div>-->
+    <div id="vk_api_transport" style="display: none;"></div>
 
-            </div>
-        </div>
-
-        <div id="vk_api_transport" style="display: none;"></div>
-
-        <div style="display: none;">
-            <div id="access_token">{{ACCESS_TOKEN}}</div>
-        </div>
+    <div style="display: none;">
+      <div id="access_token">{{ACCESS_TOKEN}}</div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block additional_block %}
@@ -46,7 +45,7 @@
         <script type="text/javascript" src="http://vkontakte.ru/js/api/openapi.js" charset="windows-1251"></script>
         <script type="text/javascript" src="/js/frameworks/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="/js/frameworks/jquery-ui-1.8.4.custom.min.js"></script>
-		<script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
+	<script type="text/javascript" src="/js/frameworks/soundmanager2.js"></script>
     	<script type="text/javascript" src="/js/frameworks/mustache.js"></script>
 
         <!-- Main -->
@@ -58,9 +57,9 @@
         <!-- Tracks -->
         <script type="text/javascript" src="/js/classes/Tracks/Track.js?v=3.0.9"></script>
 
-        <!-- Info -->
+        <!-- Info 
         <script type="text/javascript" src="/js/classes/Info/AbstractInfo.js?v=3.0.9"></script>
-        <script type="text/javascript" src="/js/classes/Info/LastFmInfo.js?v=3.0.9"></script>
+        <script type="text/javascript" src="/js/classes/Info/LastFmInfo.js?v=3.0.9"></script>-->
 
         <!-- Lists -->
         <script type="text/javascript" src="/js/classes/Lists/AbstractList.js?v=3.0.9"></script>
@@ -68,16 +67,16 @@
         <script type="text/javascript" src="/js/classes/Lists/MyAudioList.js?v=3.0.9"></script>
         <script type="text/javascript" src="/js/classes/Lists/NowPlayingList.js?v=3.0.9"></script>
         <script type="text/javascript" src="/js/classes/Lists/RecentList.js?v=3.0.9"></script>
-        <script type="text/javascript" src="/js/classes/Lists/RecommendList.js?v=3.0.9"></script>
+        <!--<script type="text/javascript" src="/js/classes/Lists/RecommendList.js?v=3.0.9"></script>-->
         <script type="text/javascript" src="/js/classes/Lists/SearchList.js?v=3.0.9"></script>
-        <script type="text/javascript" src="/js/classes/Lists/ArtistSearchList.js?v=3.0.9"></script>
+        <!--<script type="text/javascript" src="/js/classes/Lists/ArtistSearchList.js?v=3.0.9"></script>-->
         <script type="text/javascript" src="/js/classes/Lists/MusicSearchList.js?v=3.0.9"></script>
         <script type="text/javascript" src="/js/classes/Lists/UserPlayList.js?v=3.0.9"></script>
-        <script type="text/javascript" src="/js/classes/Lists/AlbumList.js?v=3.0.9"></script>
-        <script type="text/javascript" src="/js/classes/Lists/RadioList.js?v=3.0.9"></script>
+        <!--<script type="text/javascript" src="/js/classes/Lists/AlbumList.js?v=3.0.9"></script>-->
+        <!--<script type="text/javascript" src="/js/classes/Lists/RadioList.js?v=3.0.9"></script>-->
 
-        <!-- Scrobblers -->
-        <script type="text/javascript" src="/js/classes/Scrobblers/LastFmScrobbler.js?v=3.0.9"></script>
+        <!-- Scrobblers
+        <!--<script type="text/javascript" src="/js/classes/Scrobblers/LastFmScrobbler.js?v=3.0.9"></script>-->
 
         <!-- Search engines -->
         <script type="text/javascript" src="/js/classes/Search/AbstractSearchEngine.js?v=3.0.9"></script>
@@ -103,5 +102,5 @@
         <script type="text/javascript" src="/js/classes/Gui.js?v=3.0.9"></script>
         <script type="text/javascript" src="/js/classes/Player.js?v=3.0.9"></script>
 
-        <script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>
+        <!--<script type="text/javascript" src="http://yandex.st/json2/2009-09-29/json2.min.js"></script>-->
 {% endblock %}

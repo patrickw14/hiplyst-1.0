@@ -5,7 +5,6 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from annoying.decorators import ajax_request, render_to
-from other.models import ListeningHistory
 from player.models import UserProfile, AccessTokens
 
 
@@ -21,20 +20,7 @@ def full(request):
             cache.set('login_form_page', cached_page)
         return cached_page
 
-    cached_artists = cache.get("artists_top_user_%s" % request.user.id)
-    if cached_artists is None:
-        cached_artists = ListeningHistory.get_weighted_set(request.user)
-        cache.set("artists_top_user_%s" % request.user.id, cached_artists)
-    return render_to_response("new2.html", {"ACCESS_TOKEN": AccessTokens.get_random_token(), "artists_top": cached_artists, "user": request.user})
-
-
-@render_to('small.html')
-def small(request):
-    return {"ACCESS_TOKEN": AccessTokens.get_random_token()}
-
-
-def small_redirect(request, track_id):
-    return redirect("/small/#track:" + track_id)
+    return render_to_response("new2.html", {"ACCESS_TOKEN": AccessTokens.get_random_token(), "user": request.user})
 
 
 def register(request):
